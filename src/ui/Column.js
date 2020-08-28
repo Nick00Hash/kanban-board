@@ -1,14 +1,18 @@
 import React from 'react'
 import { Grid } from "@material-ui/core"
 
+import CardTile from './CardTile'
 
-const Column = () => {
-  cards = []
-  const mappedCards = cards.map(card=> {
-    <CardTile props={props} />
+const Column = (props) => {
+  const mappedCards = props.column.cards.map(card=> {
+    return (
+      <CardTile key={card.title} card={card} />
+    )
   })
   return (
-    {mappedCards}
+    <div>
+      {mappedCards}
+    </div>
   )
 }
 

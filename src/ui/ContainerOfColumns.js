@@ -1,5 +1,7 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Grid } from "@material-ui/core"
+
+import Column from './Column'
 
 const ContainerOfColumns = () => {
   const [board, setBoard] = useState([
@@ -30,6 +32,11 @@ const ContainerOfColumns = () => {
           title: "Make a trello board done",
           description: "We need to make a Camden, NJ board done",
           due_date: Date.now()
+        },
+        {
+          title: "Make a trello board done2",
+          description: "We need to make a Camden, NJ board done",
+          due_date: Date.now()
         }
       ]
     }
@@ -38,11 +45,12 @@ const ContainerOfColumns = () => {
   const dynamicColumnDesktop = 4 // Math.floor(board.length) This will be 12 divided by the number of columns rounded down.
   const dynamicColumnMobile = 6 // Math.floor(board.length) This will be 12 divided by the number of columns rounded down.
 
-
   const mappedColumns = board.map(column => {
-    <Grid item xs={dynamicColumnMobile} md={dynamicColumnDesktop}>
-      <Column columnProps={columnProps} />
-    </Grid>
+    return (
+      <Grid item key={column.title} xs={dynamicColumnMobile} md={dynamicColumnDesktop}>
+        <Column column={column} />
+      </Grid>
+    )
   })
 
   return (
