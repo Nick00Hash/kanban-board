@@ -10,10 +10,11 @@ const useStyles = makeStyles({
 });
 
 const RemoveColumnButton = (props) => {
-  const { board, setBoard, columnId } = props;
+  const { board, setBoard, columnId, removeId } = props;
   const classes = useStyles();
 
   const removeColumn = () => {
+    removeId(columnId)
     let remainingColumns = board.filter((column) => {
       return column.columnId != columnId;
     });
