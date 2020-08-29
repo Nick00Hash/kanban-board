@@ -5,6 +5,7 @@ import Modal from '@material-ui/core/Modal';
 
 import ModalForm from "./ModalForm"
 import CardTile from './CardTile'
+
 const useStyles = makeStyles((theme) => ({
   paper: {
     position: 'absolute',
@@ -28,7 +29,7 @@ function getModalStyle() {
   };
 }
 
-function SimpleModal() {
+function SimpleModal(props) {
   const classes = useStyles();
   // getModalStyle is not a pure function, we roll the style only on the first render
   const [modalStyle] = useState(getModalStyle);
@@ -46,6 +47,7 @@ function SimpleModal() {
     <div>
       <Button variant="contained" onClick={handleOpen} color="primary">+</Button>
       <Modal
+        id
         open={open}
         onClose={handleClose}
         aria-labelledby="simple-modal-title"
@@ -53,7 +55,10 @@ function SimpleModal() {
       >
       <div style={modalStyle} className={classes.paper}>
         <p id="simple-modal-title">
-          <ModalForm />
+          <ModalForm
+            id={props.column.columnId}
+            addNewCard={props.addNewCard}
+          />
         </p>
       </div>
         </Modal>
@@ -65,10 +70,6 @@ const Column = (props) => {
   const mappedCards = props.column.cards.map(card=> {
     return (
       <div key={card.id}>
-          <SimpleModal >
-            <Button variant="contained" >
-            </Button>
-          </SimpleModal>
         <CardTile key={card.title} card={card} />
       </div>
     )
@@ -77,6 +78,13 @@ const Column = (props) => {
   return (
     <div>
       {mappedCards}
+      <SimpleModal
+        column={props.column}
+        addNewCard={props.addNewCard}
+      >
+        <Button variant="contained" >
+        </Button>
+      </SimpleModal>
     </div>
   )
 }

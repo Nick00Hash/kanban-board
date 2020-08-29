@@ -4,7 +4,7 @@ import { Grid } from "@material-ui/core";
 import Column from "./Column";
 
 const ContainerOfColumns = () => {
-  const [board] = useState([
+  const [board, setboard] = useState([
     {
       columnId: 1,
       title: "To-Do",
@@ -49,6 +49,14 @@ const ContainerOfColumns = () => {
     },
   ]); // Complex state containing user data of columns/cards/etc
 
+  const addNewCard = (newCard, columnId) => {
+    let newBoard = Array.from(board)
+    let columnIndex = newBoard.findIndex(column => column.columnId === columnId)
+    debugger
+    newBoard[columnIndex].cards.push(newCard)
+    setboard(newBoard)
+  }
+
   const dynamicColumnDesktop = 4; // Math.floor(board.length) This will be 12 divided by the number of columns rounded down.
   const dynamicColumnMobile = 6; // Math.floor(board.length) This will be 12 divided by the number of columns rounded down.
 
@@ -60,7 +68,7 @@ const ContainerOfColumns = () => {
         xs={dynamicColumnMobile}
         md={dynamicColumnDesktop}
       >
-        <Column column={column} />
+        <Column column={column} addNewCard={addNewCard} />
       </Grid>
     );
   });

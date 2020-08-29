@@ -9,7 +9,8 @@ const useStyles = makeStyles({
   },
 });
 
-const ModalForm = () => {
+const ModalForm = (props) => {
+
   const [newCard, setNewCard] = useState({
     title: "",
     description: "",
@@ -25,7 +26,7 @@ const ModalForm = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    setNewCard(newCard)
+    props.addNewCard(newCard, props.id)
   }
 
   const classes = useStyles();

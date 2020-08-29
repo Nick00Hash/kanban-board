@@ -1,6 +1,7 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { Card, CardActions, CardContent, Button, Typography } from '@material-ui/core';
+import ModalForm from './ModalForm'
 
 const useStyles = makeStyles({
   root: {
