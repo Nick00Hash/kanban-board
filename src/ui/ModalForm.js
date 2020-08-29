@@ -52,7 +52,7 @@ const ModalForm = (props) => {
       />
       <div/>
       <Button  type="submit" variant="contained" color="primary">
-        Submit A New Card
+        New Card
       </Button> 
     </form>
     
