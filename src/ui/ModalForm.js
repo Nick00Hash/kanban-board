@@ -1,11 +1,19 @@
 import React, { useState } from 'react'
 import { TextField } from "@material-ui/core"
 import Button from '@material-ui/core/Button';
+import { makeStyles } from '@material-ui/core/styles';
+
+const useStyles = makeStyles({
+  spacing: {
+    margin: "5px",
+  },
+});
 
 const ModalForm = () => {
   const [newCard, setNewCard] = useState({
     title: "",
-    description: ""
+    description: "",
+    id: Date.now()
   })
 
   const handleFieldChange = (event) => {
@@ -17,13 +25,15 @@ const ModalForm = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log(newCard)
     setNewCard(newCard)
   }
+
+  const classes = useStyles();
 
   return (
     <form onSubmit={handleSubmit}>
       <TextField 
+        className={classes.spacing}
         id="title" 
         label="Title" 
         variant="outlined"
@@ -32,6 +42,7 @@ const ModalForm = () => {
       />
       <div/>
       <TextField
+        className={classes.spacing}
         id="description"
         label="Description"
         variant="outlined"
@@ -39,7 +50,7 @@ const ModalForm = () => {
         onChange={handleFieldChange}
       />
       <div/>
-      <Button type="submit" variant="contained" color="primary">
+      <Button  type="submit" variant="contained" color="primary">
         Submit A New Card
       </Button> 
     </form>
