@@ -1,19 +1,29 @@
-import React from 'react'
-import { Grid } from "@material-ui/core"
+import React from "react";
+import { Grid, Typography } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core/styles";
 
-import CardTile from './CardTile'
+import CardTile from "./CardTile";
+
+const useStyles = makeStyles({
+  card: {
+    marginBottom: "10px",
+  },
+});
 
 const Column = (props) => {
-  const mappedCards = props.column.cards.map(card=> {
+  const classes = useStyles();
+  const mappedCards = props.column.cards.map((card) => {
     return (
-      <CardTile key={card.title} card={card} />
-    )
-  })
+      <Grid className={classes.card}>
+        <CardTile key={card.title} card={card} />
+      </Grid>
+    );
+  });
   return (
-    <div>
-      {mappedCards}
-    </div>
-  )
-}
+    <Grid container spacing={3} justify="center">
+      <div>{mappedCards}</div>
+    </Grid>
+  );
+};
 
-export default Column
+export default Column;
