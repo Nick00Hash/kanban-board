@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { DragDropContext } from 'react-beautiful-dnd'
+import { DragDropContext, Droppable } from 'react-beautiful-dnd'
 import { Grid, Typography, Paper } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 
@@ -8,14 +8,10 @@ import NewColumnButton from "./NewColumnButton";
 import RemoveColumnButton from "./RemoveColumnButton";
 
 const useStyles = makeStyles({
-  columnTitle: {
-    textAlign: "center",
-    margin: "1rem",
-  },
   columnContainer: {
     paddingTop: '4rem',
     // marginTop: "80px",
-  },
+  }
 });
 
 const ContainerOfColumns = (props) => {
@@ -96,6 +92,14 @@ const ContainerOfColumns = (props) => {
       return;
     }
 
+    if (result.type === 'column') {
+      const newColumnOrder = Array.from(columnOrder)
+      newColumnOrder.splice(result.source.index, 1)
+      newColumnOrder.splice(result.destination.index, 0, result.draggableId)
+      setColumnOrder(newColumnOrder)
+      return
+    }
+
     const sourceColumn = board.find((column) => column.columnId === result.source.droppableId)
     const destinationColumn = board.find((column) => column.columnId === result.destination.droppableId)
     const draggedCard = sourceColumn.cards.find(card => card.title === result.draggableId)
@@ -147,7 +151,7 @@ const ContainerOfColumns = (props) => {
     setBoard(updatedState())
   }
 
-  const mappedColumns = columnOrder.map((columnId) => {
+  const mappedColumns = columnOrder.map((columnId, index) => {
     const column = board.find((column) => column.columnId === columnId)
 
     return (
@@ -157,36 +161,35 @@ const ContainerOfColumns = (props) => {
         xs={dynamicColumnMobile}
         md={dynamicColumnDesktop}
       >
-        <Paper>
-          <span className={classes.inline}>
-            <Typography className={classes.columnTitle} variant="h4">
-              {column.title}{" "}
-              <RemoveColumnButton
-                board={board}
-                setBoard={setBoard}
-                removeId={removeId}
-                columnId={column.columnId}
-              />
-            </Typography>
-          </span>
-          <Column column={column} columnId={column.columnId} />
-        </Paper>
+        <Column column={column} columnId={column.columnId} index={index} setBoard={setBoard} removeId={removeId} board={board}/>
       </Grid>
     );
   });
 
   return (
     <>
-      <Grid
-        container
-        spacing={5}
-        justify="space-around"
-        className={classes.columnContainer}
-      >
       <DragDropContext onDragEnd={onDragEnd}>
-        {mappedColumns}
+        <Droppable 
+          droppableId="columns-board" 
+          direction='horizontal' 
+          type="column"
+          className={classes.droppable}
+        >
+          {(provided) => (
+            <Grid
+              container
+              spacing={5}
+              justify="space-around"
+              className={classes.columnContainer}
+              {...provided.droppableProps}
+              ref={provided.innerRef}
+            >
+              {mappedColumns}
+              {provided.placeholder}
+            </Grid>
+          )}
+        </Droppable>
       </DragDropContext>
-      </Grid>
       <NewColumnButton
         board={board}
         setBoard={setBoard}

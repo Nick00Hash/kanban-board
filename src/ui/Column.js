@@ -1,9 +1,10 @@
 import React from 'react'
 import { makeStyles } from '@material-ui/core/styles';
-import { Droppable } from 'react-beautiful-dnd'
-import { Grid, Typography } from "@material-ui/core";
+import { Droppable, Draggable } from 'react-beautiful-dnd'
+import { Grid, Typography, Paper } from "@material-ui/core";
 
 import CardTile from "./CardTile";
+import RemoveColumnButton from "./RemoveColumnButton";
 
 const useStyles = makeStyles({
   card: {
@@ -18,7 +19,11 @@ const useStyles = makeStyles({
     transition: 'background-color 0.3s ease',
     backgroundColor: 'yellow',
     paddingBottom: '1rem'
-  }
+  },
+  columnTitle: {
+    textAlign: "center",
+    margin: "1rem",
+  },
 });
 
 const Column = (props) => {
@@ -33,20 +38,40 @@ const Column = (props) => {
   });
   
   return (
-    <div>
-      <Droppable droppableId={props.column.columnId}>
-        {(provided, snapshot) => (
-          <div
-            ref={provided.innerRef}
-            {...provided.droppableProps}
-            className={(snapshot.isDraggingOver ? classes.columnColored : classes.column)}
-          >
-            {mappedCards}
-            {provided.placeholder}
-          </div>
-        )}
-      </Droppable>
-    </div>
+    <Draggable draggableId={props.column.columnId} index={props.index}>
+      {(provided) => (
+        <div
+          {...provided.draggableProps}
+          ref={provided.innerRef}
+        >
+          <Paper>
+            <span className={classes.inline}>
+              <Typography className={classes.columnTitle} variant="h4" {...provided.dragHandleProps}>
+                {props.column.title}{" "}
+                <RemoveColumnButton
+                  board={props.board}
+                  setBoard={props.setBoard}
+                  removeId={props.removeId}
+                  columnId={props.column.columnId}
+                />
+              </Typography>
+            </span>
+            <Droppable droppableId={props.column.columnId} type='card'>
+            {(provided, snapshot) => (
+              <div
+                ref={provided.innerRef}
+                {...provided.droppableProps}
+                className={(snapshot.isDraggingOver ? classes.columnColored : classes.column)}
+              >
+                {mappedCards}
+                {provided.placeholder}
+              </div>
+            )}
+          </Droppable>
+          </Paper>
+        </div>
+      )}
+    </Draggable>
   )
 }
 
