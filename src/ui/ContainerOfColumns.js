@@ -1,10 +1,27 @@
 import React, { useState } from "react";
-import { Grid } from "@material-ui/core";
 import { DragDropContext } from 'react-beautiful-dnd'
+import { Grid, Typography, Paper } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core/styles";
 
 import Column from "./Column";
+import NewColumnButton from "./NewColumnButton";
+import RemoveColumnButton from "./RemoveColumnButton";
 
-const ContainerOfColumns = () => {
+const useStyles = makeStyles({
+  columnTitle: {
+    textAlign: "center",
+    margin: "1rem",
+  },
+  columnContainer: {
+    marginTop: "30px",
+    // marginLeft: "10%",
+    // marginRight: "20px",
+  },
+});
+
+const ContainerOfColumns = (props) => {
+  const classes = useStyles();
+  const { globalCount, globalIncrement } = props;
   const [columnOrder, setColumnOrder] = useState(["1", "2", "3"])
   const [board, setBoard] = useState([
     {
@@ -58,7 +75,7 @@ const ContainerOfColumns = () => {
   ]); // Complex state containing user data of columns/cards/etc
 
   const dynamicColumnDesktop = 4; // Math.floor(board.length) This will be 12 divided by the number of columns rounded down.
-  const dynamicColumnMobile = 6; // Math.floor(board.length) This will be 12 divided by the number of columns rounded down.
+  const dynamicColumnMobile = 12; // Math.floor(board.length) This will be 12 divided by the number of columns rounded down.
 
   const onDragEnd = (result) => {
     if (!result.destination) {
@@ -133,17 +150,42 @@ const ContainerOfColumns = () => {
         xs={dynamicColumnMobile}
         md={dynamicColumnDesktop}
       >
-        <Column column={column} />
+        <Paper>
+          <span className={classes.inline}>
+            <Typography className={classes.columnTitle} variant="h4">
+              {column.title}{" "}
+              <RemoveColumnButton
+                board={board}
+                setBoard={setBoard}
+                columnId={column.columnId}
+              />
+            </Typography>
+          </span>
+          <Column column={column} columnId={column.columnId} />
+        </Paper>
       </Grid>
     );
   });
 
   return (
-    <Grid container>
+    <>
+      <Grid
+        container
+        spacing={5}
+        justify="space-around"
+        className={classes.columnContainer}
+      >
       <DragDropContext onDragEnd={onDragEnd}>
         {mappedColumns}
       </DragDropContext>
-    </Grid>
+      </Grid>
+      <NewColumnButton
+        board={board}
+        setBoard={setBoard}
+        globalCount={globalCount}
+        globalIncrement={globalIncrement}
+      />
+    </>
   );
 };
 

@@ -1,9 +1,15 @@
 import React from 'react'
 import { makeStyles } from '@material-ui/core/styles';
 import { Droppable } from 'react-beautiful-dnd'
-import { Grid } from "@material-ui/core"
+import { Grid, Typography } from "@material-ui/core";
 
-import CardTile from './CardTile'
+import CardTile from "./CardTile";
+
+const useStyles = makeStyles({
+  card: {
+    marginBottom: "10px",
+  },
+});
 
 const useStyles = makeStyles({
   column: {
@@ -21,9 +27,11 @@ const Column = (props) => {
 
   const mappedCards = props.column.cards.map((card, index) => {
     return (
-      <CardTile key={card.title} card={card} index={index} />
-    )
-  })
+      <Grid className={classes.card}>
+        <CardTile key={card.title} card={card} index={index}/>
+      </Grid>
+    );
+  });
   
   return (
     <div>
@@ -34,8 +42,10 @@ const Column = (props) => {
             {...provided.droppableProps}
             className={(snapshot.isDraggingOver ? classes.columnColored : classes.column)}
           >
+          <Grid container spacing={3} justify="center">
             {mappedCards}
             {provided.placeholder}
+          </Grid>
           </div>
         )}
       </Droppable>
@@ -44,4 +54,3 @@ const Column = (props) => {
 }
 
 export default Column
- 

@@ -1,20 +1,27 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import { Card, CardActions, CardContent, Button, Typography } from '@material-ui/core';
 import { Draggable } from 'react-beautiful-dnd'
+import { makeStyles } from "@material-ui/core/styles";
+import {
+  Card,
+  CardActions,
+  CardContent,
+  Button,
+  Typography,
+} from "@material-ui/core";
 
 const useStyles = makeStyles({
   root: {
-    minWidth: 275,
+    // minWidth: 275,
+    backgroundColor: "#fce4ec",
   },
   rootColor: {
     minWidth: 275,
     backgroundColor: 'lightgreen'
   },
   bullet: {
-    display: 'inline-block',
-    margin: '0 2px',
-    transform: 'scale(0.8)',
+    display: "inline-block",
+    margin: "0 2px",
+    transform: "scale(0.8)",
   },
   title: {
     fontSize: 14,
@@ -22,9 +29,10 @@ const useStyles = makeStyles({
   pos: {
     marginBottom: 12,
   },
+  background: {},
 });
 
- const CardTile = (props) => {
+const CardTile = (props) => {
   const classes = useStyles();
   const bull = <span className={classes.bullet}>•</span>;
 
@@ -38,7 +46,11 @@ const useStyles = makeStyles({
         >
           <Card className={ (snapshot.isDragging ? classes.rootColor : classes.root) }>
             <CardContent>
-              <Typography className={classes.title} color="textSecondary" gutterBottom>
+              <Typography 
+                className={classes.title} 
+                color="textSecondary" 
+                gutterBottom
+              >
                 {props.card.title}
               </Typography>
               <Typography variant="h5" component="h2">
@@ -61,6 +73,6 @@ const useStyles = makeStyles({
       )}
     </Draggable>
   );
-}
+};
 
-export default CardTile
+export default CardTile;
