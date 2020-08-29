@@ -36,7 +36,7 @@ const useStyles = makeStyles({
           adjective
         </Typography>
         <Typography variant="body2" component="p">
-          well meaning and kindly.
+          well meaning and kindly. 
           <br />
           {'"a benevolent smile"'}
         </Typography>

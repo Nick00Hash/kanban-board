@@ -4,7 +4,7 @@ import { Grid } from "@material-ui/core";
 import Column from "./Column";
 
 const ContainerOfColumns = () => {
-  const [board, setBoard] = useState([
+  const [board] = useState([
     {
       columnId: 1,
       title: "To-Do",
