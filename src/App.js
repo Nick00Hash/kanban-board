@@ -7,6 +7,7 @@ import {
 
 import ContainerOfColumns from "./ui/ContainerOfColumns";
 import RaisedAppBar from "./ui/AppBar";
+import YEET from "./YEET";
 
 const theme = createMuiTheme({
   palette: {
@@ -46,6 +47,7 @@ const App = () => {
           globalIncrement={globalIncrement}
         />
       </div>
+      <YEET />
     </ThemeProvider>
   );
 };
