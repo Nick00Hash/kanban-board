@@ -8,6 +8,7 @@ import {
   Button,
   Typography,
 } from "@material-ui/core";
+import ModalForm from './ModalForm'
 
 const useStyles = makeStyles({
   root: {

@@ -69,6 +69,13 @@ const ContainerOfColumns = (props) => {
     },
   ]); // Complex state containing user data of columns/cards/etc
 
+  const addNewCard = (newCard, columnId) => {
+    let newBoard = Array.from(board)
+    let columnIndex = newBoard.findIndex(column => column.columnId === columnId)
+    newBoard[columnIndex].cards.push(newCard)
+    setBoard(newBoard)
+  }
+
   const dynamicColumnDesktop = 4; // Math.floor(board.length) This will be 12 divided by the number of columns rounded down.
   const dynamicColumnMobile = 12; // Math.floor(board.length) This will be 12 divided by the number of columns rounded down.
 
@@ -161,7 +168,7 @@ const ContainerOfColumns = (props) => {
         xs={dynamicColumnMobile}
         md={dynamicColumnDesktop}
       >
-        <Column column={column} columnId={column.columnId} index={index} setBoard={setBoard} removeId={removeId} board={board}/>
+        <Column column={column} columnId={column.columnId} index={index} setBoard={setBoard} removeId={removeId} board={board} addNewCard={addNewCard}/>
       </Grid>
     );
   });
