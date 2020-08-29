@@ -1,9 +1,23 @@
 import React, { useState } from "react";
-import { Grid } from "@material-ui/core";
+import { Grid, Typography, Paper } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core/styles";
 
 import Column from "./Column";
+import NewColumnButton from "./NewColumnButton";
+
+const useStyles = makeStyles({
+  columnTitle: {
+    textAlign: "center",
+    margin: "1rem",
+  },
+  columnContainer: {
+    // marginLeft: "10%",
+    // marginRight: "20px",
+  },
+});
 
 const ContainerOfColumns = () => {
+  const classes = useStyles();
   const [board, setBoard] = useState([
     {
       columnId: 1,
@@ -60,12 +74,29 @@ const ContainerOfColumns = () => {
         xs={dynamicColumnMobile}
         md={dynamicColumnDesktop}
       >
-        <Column column={column} />
+        <Paper>
+          <Typography className={classes.columnTitle} variant="h5">
+            {column.title}
+          </Typography>
+          <Column column={column} columnId={column.columnId} />
+        </Paper>
       </Grid>
     );
   });
 
-  return <Grid container>{mappedColumns}</Grid>;
+  return (
+    <>
+      <Grid
+        container
+        spacing={5}
+        justify="space-around"
+        className={classes.columnContainer}
+      >
+        {mappedColumns}
+      </Grid>
+      <NewColumnButton board={board} setBoard={setBoard} />
+    </>
+  );
 };
 
 export default ContainerOfColumns;
