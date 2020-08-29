@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   createMuiTheme,
   makeStyles,
@@ -16,6 +16,9 @@ const theme = createMuiTheme({
     secondary: {
       main: "#ffecb3",
     },
+    background: {
+      paper: "#fff8e1",
+    },
   },
 });
 
@@ -28,11 +31,20 @@ const useStyles = makeStyles((theme) => ({
 
 const App = () => {
   const classes = useStyles();
+  const [globalCount, setGlobalCount] = useState(4);
+
+  const globalIncrement = () => {
+    setGlobalCount(globalCount + 1);
+  };
+
   return (
     <ThemeProvider theme={theme}>
       <div className={classes.appContainer}>
         <RaisedAppBar />
-        <ContainerOfColumns />
+        <ContainerOfColumns
+          globalCount={globalCount}
+          globalIncrement={globalIncrement}
+        />
       </div>
     </ThemeProvider>
   );

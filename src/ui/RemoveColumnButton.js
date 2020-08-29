@@ -1,10 +1,17 @@
 import React from "react";
-import Button from "@material-ui/core/Button";
-import Icon from "@material-ui/core/Icon";
-import IndeterminateCheckBoxIcon from "@material-ui/icons/IndeterminateCheckBox";
+import { Fab } from "@material-ui/core";
+import DeleteForeverIcon from "@material-ui/icons/DeleteForever";
+import { makeStyles } from "@material-ui/core/styles";
+
+const useStyles = makeStyles({
+  remove: {
+    backgroundColor: "#ff1744",
+  },
+});
 
 const RemoveColumnButton = (props) => {
   const { board, setBoard, columnId } = props;
+  const classes = useStyles();
 
   const removeColumn = () => {
     let remainingColumns = board.filter((column) => {
@@ -14,14 +21,14 @@ const RemoveColumnButton = (props) => {
   };
 
   return (
-    <Button
-      variant="contained"
-      color="primary"
-      startIcon={<IndeterminateCheckBoxIcon />}
+    <Fab
+      size="small"
+      aria-label="add"
+      className={classes.remove}
       onClick={removeColumn}
     >
-      Delete Column
-    </Button>
+      <DeleteForeverIcon />
+    </Fab>
   );
 };
 

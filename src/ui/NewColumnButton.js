@@ -4,19 +4,19 @@ import Icon from "@material-ui/core/Icon";
 import AddBoxIcon from "@material-ui/icons/AddBox";
 
 const NewColumnButton = (props) => {
-  const { board, setBoard } = props;
+  const { board, setBoard, globalCount, globalIncrement } = props;
 
   const addNewColumn = () => {
-    // let time = new Date();
-    // let timeStamp = time.getTime();
+    let idString = globalCount.toString();
     setBoard([
       ...board,
       {
-        columnId: 100,
+        columnId: idString,
         title: "Click to change Title",
         cards: [],
       },
     ]);
+    globalIncrement();
   };
 
   return (

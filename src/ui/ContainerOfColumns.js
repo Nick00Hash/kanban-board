@@ -18,8 +18,9 @@ const useStyles = makeStyles({
   },
 });
 
-const ContainerOfColumns = () => {
+const ContainerOfColumns = (props) => {
   const classes = useStyles();
+  const { globalCount, globalIncrement } = props;
   const [board, setBoard] = useState([
     {
       columnId: 1,
@@ -66,7 +67,7 @@ const ContainerOfColumns = () => {
   ]); // Complex state containing user data of columns/cards/etc
 
   const dynamicColumnDesktop = 4; // Math.floor(board.length) This will be 12 divided by the number of columns rounded down.
-  const dynamicColumnMobile = 6; // Math.floor(board.length) This will be 12 divided by the number of columns rounded down.
+  const dynamicColumnMobile = 12; // Math.floor(board.length) This will be 12 divided by the number of columns rounded down.
 
   const mappedColumns = board.map((column) => {
     return (
@@ -77,14 +78,16 @@ const ContainerOfColumns = () => {
         md={dynamicColumnDesktop}
       >
         <Paper>
-          <Typography className={classes.columnTitle} variant="h5">
-            {column.title}
-          </Typography>
-          <RemoveColumnButton
-            board={board}
-            setBoard={setBoard}
-            columnId={column.columnId}
-          />
+          <span className={classes.inline}>
+            <Typography className={classes.columnTitle} variant="h4">
+              {column.title}{" "}
+              <RemoveColumnButton
+                board={board}
+                setBoard={setBoard}
+                columnId={column.columnId}
+              />
+            </Typography>
+          </span>
           <Column column={column} columnId={column.columnId} />
         </Paper>
       </Grid>
@@ -101,7 +104,12 @@ const ContainerOfColumns = () => {
       >
         {mappedColumns}
       </Grid>
-      <NewColumnButton board={board} setBoard={setBoard} />
+      <NewColumnButton
+        board={board}
+        setBoard={setBoard}
+        globalCount={globalCount}
+        globalIncrement={globalIncrement}
+      />
     </>
   );
 };
