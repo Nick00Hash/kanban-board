@@ -9,16 +9,15 @@ const useStyles = makeStyles({
   card: {
     marginBottom: "10px",
   },
-});
-
-const useStyles = makeStyles({
   column: {
-    minHeight: '200px'
+    minHeight: '200px',
+    paddingBottom: '1rem'
   },
   columnColored: {
     minHeight: '200px',
     transition: 'background-color 0.3s ease',
-    backgroundColor: 'yellow'
+    backgroundColor: 'yellow',
+    paddingBottom: '1rem'
   }
 });
 
@@ -27,7 +26,7 @@ const Column = (props) => {
 
   const mappedCards = props.column.cards.map((card, index) => {
     return (
-      <Grid className={classes.card}>
+      <Grid className={classes.card} key={card.title}>
         <CardTile key={card.title} card={card} index={index}/>
       </Grid>
     );
@@ -42,10 +41,8 @@ const Column = (props) => {
             {...provided.droppableProps}
             className={(snapshot.isDraggingOver ? classes.columnColored : classes.column)}
           >
-          <Grid container spacing={3} justify="center">
             {mappedCards}
             {provided.placeholder}
-          </Grid>
           </div>
         )}
       </Droppable>

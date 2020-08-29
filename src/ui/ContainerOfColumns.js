@@ -13,9 +13,8 @@ const useStyles = makeStyles({
     margin: "1rem",
   },
   columnContainer: {
-    marginTop: "30px",
-    // marginLeft: "10%",
-    // marginRight: "20px",
+    paddingTop: '4rem',
+    // marginTop: "80px",
   },
 });
 
@@ -76,6 +75,14 @@ const ContainerOfColumns = (props) => {
 
   const dynamicColumnDesktop = 4; // Math.floor(board.length) This will be 12 divided by the number of columns rounded down.
   const dynamicColumnMobile = 12; // Math.floor(board.length) This will be 12 divided by the number of columns rounded down.
+
+  const addNewId = (Id) => {
+    setColumnOrder([...columnOrder, Id])
+  }
+
+  const removeId = (Id) => {
+    setColumnOrder(columnOrder.filter((columnId) => columnId != Id ))
+  }
 
   const onDragEnd = (result) => {
     if (!result.destination) {
@@ -157,6 +164,7 @@ const ContainerOfColumns = (props) => {
               <RemoveColumnButton
                 board={board}
                 setBoard={setBoard}
+                removeId={removeId}
                 columnId={column.columnId}
               />
             </Typography>
@@ -182,6 +190,7 @@ const ContainerOfColumns = (props) => {
       <NewColumnButton
         board={board}
         setBoard={setBoard}
+        addNewId={addNewId}
         globalCount={globalCount}
         globalIncrement={globalIncrement}
       />

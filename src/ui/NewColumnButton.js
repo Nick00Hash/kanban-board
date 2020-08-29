@@ -4,10 +4,11 @@ import Icon from "@material-ui/core/Icon";
 import AddBoxIcon from "@material-ui/icons/AddBox";
 
 const NewColumnButton = (props) => {
-  const { board, setBoard, globalCount, globalIncrement } = props;
+  const { board, setBoard, globalCount, globalIncrement, addNewId } = props;
 
   const addNewColumn = () => {
     let idString = globalCount.toString();
+    addNewId(idString)
     setBoard([
       ...board,
       {
