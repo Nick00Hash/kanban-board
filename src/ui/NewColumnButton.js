@@ -7,10 +7,12 @@ const NewColumnButton = (props) => {
   const { board, setBoard } = props;
 
   const addNewColumn = () => {
+    // let time = new Date();
+    // let timeStamp = time.getTime();
     setBoard([
       ...board,
       {
-        columnId: 1,
+        columnId: 100,
         title: "Click to change Title",
         cards: [],
       },
@@ -20,7 +22,7 @@ const NewColumnButton = (props) => {
   return (
     <Button
       variant="contained"
-      color="primary"
+      color="secondary"
       startIcon={<AddBoxIcon />}
       onClick={addNewColumn}
     >

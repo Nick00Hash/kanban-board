@@ -4,6 +4,7 @@ import { makeStyles } from "@material-ui/core/styles";
 
 import Column from "./Column";
 import NewColumnButton from "./NewColumnButton";
+import RemoveColumnButton from "./RemoveColumnButton";
 
 const useStyles = makeStyles({
   columnTitle: {
@@ -11,6 +12,7 @@ const useStyles = makeStyles({
     margin: "1rem",
   },
   columnContainer: {
+    marginTop: "30px",
     // marginLeft: "10%",
     // marginRight: "20px",
   },
@@ -78,6 +80,11 @@ const ContainerOfColumns = () => {
           <Typography className={classes.columnTitle} variant="h5">
             {column.title}
           </Typography>
+          <RemoveColumnButton
+            board={board}
+            setBoard={setBoard}
+            columnId={column.columnId}
+          />
           <Column column={column} columnId={column.columnId} />
         </Paper>
       </Grid>

@@ -1,14 +1,14 @@
 import React from "react";
 import Button from "@material-ui/core/Button";
 import Icon from "@material-ui/core/Icon";
-import AddBoxIcon from "@material-ui/icons/AddBox";
+import IndeterminateCheckBoxIcon from "@material-ui/icons/IndeterminateCheckBox";
 
-const RemoveColumnButton = () => {
+const RemoveColumnButton = (props) => {
   const { board, setBoard, columnId } = props;
 
   const removeColumn = () => {
     let remainingColumns = board.filter((column) => {
-      column.columnId != columnId;
+      return column.columnId != columnId;
     });
     setBoard(remainingColumns);
   };
@@ -17,10 +17,10 @@ const RemoveColumnButton = () => {
     <Button
       variant="contained"
       color="primary"
-      startIcon={<AddBoxIcon />}
-      onClick={addNewColumn}
+      startIcon={<IndeterminateCheckBoxIcon />}
+      onClick={removeColumn}
     >
-      Add Column
+      Delete Column
     </Button>
   );
 };
