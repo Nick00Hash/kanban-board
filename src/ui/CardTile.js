@@ -8,10 +8,20 @@ import {
   CardContent,
   Button,
   Typography,
+  IconButton,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+  TextareaAutosize
 } from "@material-ui/core";
 
 import ModalForm from "./ModalForm";
 import CardAccordion from "./CardAccordion";
+
+import CloseTwoToneIcon from '@material-ui/icons/CloseTwoTone';
+
 
 const useStyles = makeStyles({
   root: {
@@ -20,14 +30,20 @@ const useStyles = makeStyles({
     backgroundColor: "#fce4ec",
   },
   rootColor: {
-    maxWidth: "90%",
-    backgroundColor: "lightgreen",
+    maxWidth: '90%',
+    backgroundColor: 'lightgreen',
   },
   bullet: {
     display: "inline-block",
     margin: "0 2px",
     transform: "scale(0.8)",
   },
+//  title: {
+//    fontSize: 14,
+//    display: 'flex',
+//    justifyContent: 'space-between',
+//    alignItems: 'center',
+//  },
   pos: {
     marginBottom: 12,
   },
@@ -35,6 +51,7 @@ const useStyles = makeStyles({
 });
 
 const CardTile = (props) => {
+  const [open, setOpen] = useState(false)
   const classes = useStyles();
   const { card } = props;
   const [selectedDate, setSelectedDate] = useState(
@@ -44,7 +61,20 @@ const CardTile = (props) => {
   const handleDateChange = (date) => {
     setSelectedDate(date);
   };
-  console.log(selectedDate);
+  
+    const handleClickOpen = () => {
+    setOpen(true)
+  }
+
+  const handleClose = () => {
+    setOpen(false)
+  }
+  
+    const handleDelete = () => {
+    props.removeCard(card.id, props.columnId)
+    handleClose()
+  }
+  
   return (
     <Draggable draggableId={card.title} index={props.index}>
       {(provided, snapshot) => (
@@ -59,6 +89,13 @@ const CardTile = (props) => {
             <CardContent>
               <Typography className={classes.title} gutterBottom variant="h6">
                 {card.title}
+
+              <IconButton
+                size='small'
+                onClick={handleClickOpen}
+              >
+                <CloseTwoToneIcon/>
+              </IconButton>
               </Typography>
             </CardContent>
             <CardAccordion
@@ -67,6 +104,22 @@ const CardTile = (props) => {
               handleDateChange={handleDateChange}
             />
           </Card>
+          <Dialog
+            open={open}
+            onClose={handleClose}
+            aria-labelledby="alert-dialog-title"
+            aria-describedby="alert-dialog-description"
+           >
+            <DialogTitle id="alert-dialog-title">{"Delete this card?"}</DialogTitle>
+            <DialogActions>
+              <Button onClick={handleClose} color="primary">
+                No
+              </Button>
+              <Button onClick={handleDelete} color="primary" autoFocus>
+                Yes
+              </Button>
+            </DialogActions>
+          </Dialog>
         </div>
       )}
     </Draggable>
