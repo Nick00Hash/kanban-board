@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "date-fns";
+// import "date-fns";
 import { makeStyles } from "@material-ui/core/styles";
 import {
   Accordion,
@@ -10,7 +10,7 @@ import {
 } from "@material-ui/core";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 
-import DatePicker from "./DatePicker";
+// import DatePicker from "./DatePicker";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -57,10 +57,6 @@ const CardAccordion = (props) => {
           <Grid container>
             <Typography>{description}</Typography>
             <Grid item xs={12}>
-              <DatePicker
-                selectedDate={selectedDate}
-                handleDateChange={handleDateChange}
-              />
             </Grid>
           </Grid>
         </AccordionDetails>
