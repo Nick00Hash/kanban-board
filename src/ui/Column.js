@@ -73,7 +73,6 @@ const SimpleModal = (props) => {
         aria-labelledby="simple-modal-title"
         aria-describedby="simple-modal-description"
       >
-
         <div style={modalStyle} className={classes.paper}>
           <p id="simple-modal-title">
             <ModalForm
@@ -84,7 +83,6 @@ const SimpleModal = (props) => {
           </p>
         </div>
       </Modal>
-
     </div>
   );
 };
@@ -94,15 +92,14 @@ const Column = (props) => {
   const { column } = props;
   const mappedCards = column.cards.map((card, index) => {
     return (
-      <Grid className={classes.card} key={card.title}>
-        <CardTile 
-          key={card.title} 
-          card={card} 
-          index={index} 
-          removeCard={props.removeCard} 
-          columnId={props.column.columnId} 
-          moveCard={props.moveCard} 
-          columnIndex={props.index} 
+      <Grid className={classes.card} key={card.id}>
+        <CardTile
+          card={card}
+          index={index}
+          removeCard={props.removeCard}
+          columnId={props.column.columnId}
+          moveCard={props.moveCard}
+          columnIndex={props.index}
           lastColumn={props.lastColumn}
         />
       </Grid>
