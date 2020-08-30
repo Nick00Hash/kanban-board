@@ -16,8 +16,6 @@ import {
 import CloseTwoToneIcon from "@material-ui/icons/CloseTwoTone";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import ChevronRightIcon from "@material-ui/icons/ChevronRight";
-
-import ModalForm from "./ModalForm";
 import CardAccordion from "./CardAccordion";
 
 const useStyles = makeStyles({
