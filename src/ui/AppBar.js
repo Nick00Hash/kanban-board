@@ -33,7 +33,7 @@ const ElevationScroll = (props) => {
 };
 
 const RaisedAppBar = (props) => {
-  const { board, setBoard } = props;
+  const { board, setBoard, addNewId, globalCount, globalIncrement } = props;
 
   const classes = useStyles();
   return (
@@ -45,6 +45,13 @@ const RaisedAppBar = (props) => {
             <Typography className={classes.title} variant="h6">
               Welcome to your Kanban Board!
             </Typography>
+            <NewColumnButton
+              board={board}
+              setBoard={setBoard}
+              addNewId={addNewId}
+              globalCount={globalCount}
+              globalIncrement={globalIncrement}
+            />
           </Toolbar>
         </AppBar>
       </ElevationScroll>
