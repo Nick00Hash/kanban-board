@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
-import { Draggable } from 'react-beautiful-dnd'
+import React, { useState } from "react";
+import "date-fns";
+import { Draggable } from "react-beautiful-dnd";
 import { makeStyles } from "@material-ui/core/styles";
 import {
   Card,
@@ -16,10 +17,13 @@ import CloseTwoToneIcon from '@material-ui/icons/CloseTwoTone';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 
+import ModalForm from "./ModalForm";
+import CardAccordion from "./CardAccordion";
+
 const useStyles = makeStyles({
   root: {
-    maxWidth: '90%',
-    marginLeft: '5%',
+    maxWidth: "90%",
+    marginLeft: "5%",
     backgroundColor: "#fce4ec",
   },
   rootColor: {
@@ -55,18 +59,25 @@ const useStyles = makeStyles({
 const CardTile = (props) => {
   const [open, setOpen] = useState(false)
   const classes = useStyles();
-  const bull = <span className={classes.bullet}>•</span>;
+  const { card } = props;
+  const [selectedDate, setSelectedDate] = useState(
+    new Date("2020-08-18T21:11:54")
+  );
 
-  const handleClickOpen = () => {
+  const handleDateChange = (date) => {
+    setSelectedDate(date);
+  };
+  
+    const handleClickOpen = () => {
     setOpen(true)
   }
 
   const handleClose = () => {
     setOpen(false)
   }
-
-  const handleDelete = () => {
-    props.removeCard(props.card.id, props.columnId)
+  
+    const handleDelete = () => {
+    props.removeCard(card.id, props.columnId)
     handleClose()
   }
 
@@ -85,21 +96,19 @@ const CardTile = (props) => {
   }
 
   return (
-    <Draggable draggableId={props.card.id} index={props.index}>
+    <Draggable draggableId={card.title} index={props.index}>
       {(provided, snapshot) => (
         <div
           {...provided.draggableProps}
           {...provided.dragHandleProps}
           ref={provided.innerRef}
         >
-          <Card className={ (snapshot.isDragging ? classes.rootColor : classes.root) }>
-            <CardContent className={classes.cardContent}>
-              <Typography 
-                className={classes.title} 
-                color="textSecondary" 
-                gutterBottom
-              >
-                {props.card.title}
+          <Card
+            className={snapshot.isDragging ? classes.rootColor : classes.root}
+          >
+            <CardContent>
+              <Typography className={classes.title} gutterBottom variant="h6">
+                {card.title}
               <IconButton
                 size='small'
                 onClick={handleClickOpen}
@@ -116,6 +125,11 @@ const CardTile = (props) => {
                 </IconButton>
               </Box>
             </CardContent>
+            <CardAccordion
+              description={card.description}
+              selectedDate={selectedDate}
+              handleDateChange={handleDateChange}
+            />
           </Card>
           <Dialog
             open={open}
