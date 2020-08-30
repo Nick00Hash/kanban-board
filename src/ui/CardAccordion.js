@@ -30,7 +30,7 @@ const useStyles = makeStyles((theme) => ({
 
 const CardAccordion = (props) => {
   const classes = useStyles();
-  const { description, selectedDate, handleDateChange } = props;
+  const { description, selectedDate } = props;
   const [expanded, setExpanded] = useState(false);
 
   const handleChange = (panel) => (event, isExpanded) => {
