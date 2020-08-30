@@ -91,7 +91,16 @@ const Column = (props) => {
   const mappedCards = props.column.cards.map((card, index) => {
     return (
       <Grid className={classes.card} key={card.title}>
-        <CardTile key={card.title} card={card} index={index} removeCard={props.removeCard} columnId={props.column.columnId}/>
+        <CardTile 
+          key={card.title} 
+          card={card} 
+          index={index} 
+          removeCard={props.removeCard} 
+          columnId={props.column.columnId} 
+          moveCard={props.moveCard} 
+          columnIndex={props.index} 
+          lastColumn={props.lastColumn}
+        />
       </Grid>
     );
   });

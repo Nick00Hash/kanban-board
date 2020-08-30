@@ -88,19 +88,25 @@ const ContainerOfColumns = (props) => {
   };
 
   const removeId = (Id) => {
-    setColumnOrder(columnOrder.filter((columnId) => columnId != Id));
-  };
+    setColumnOrder(columnOrder.filter((columnId) => columnId !== Id ))
+  }
 
   const removeCard = (id, columnId) => {
-    let newBoard = Array.from(board);
-    let columnIndex = newBoard.findIndex(
-      (column) => column.columnId === columnId
-    );
-    newBoard[columnIndex].cards = newBoard[columnIndex].cards.filter(
-      (card) => card.id != id
-    );
-    setBoard(newBoard);
-  };
+    let newBoard = Array.from(board)
+    let columnIndex = newBoard.findIndex(column => column.columnId === columnId)
+    newBoard[columnIndex].cards = newBoard[columnIndex].cards.filter(card => card.id !== id)
+    setBoard(newBoard)
+  }
+
+  const moveCard = (cardId, sourceColumnOrderIndex, destinationColumnOrderIndex) => {
+    const newBoard = Array.from(board)
+    const sourceColumnIndex = newBoard.findIndex(column => column.columnId === columnOrder[sourceColumnOrderIndex])
+    const destinationColumnIndex = newBoard.findIndex(column => column.columnId === columnOrder[destinationColumnOrderIndex])
+    const movedCard = newBoard[sourceColumnIndex].cards.find(card => card.id === cardId)
+    newBoard[sourceColumnIndex].cards = newBoard[sourceColumnIndex].cards.filter(card => card.id !== cardId)
+    newBoard[destinationColumnIndex].cards.push(movedCard)
+    setBoard(newBoard)
+  }
 
   const onDragEnd = (result) => {
     if (!result.destination) {
@@ -186,7 +192,11 @@ const ContainerOfColumns = (props) => {
   };
 
   const mappedColumns = columnOrder.map((columnId, index) => {
-    const column = board.find((column) => column.columnId === columnId);
+    const column = board.find((column) => column.columnId === columnId)
+    let lastColumn = false
+    if (index + 1 === columnOrder.length ) {
+      lastColumn = true
+    }
 
     return (
       <Grid
@@ -195,15 +205,17 @@ const ContainerOfColumns = (props) => {
         xs={dynamicColumnMobile}
         md={dynamicColumnDesktop}
       >
-        <Column
-          column={column}
-          columnId={column.columnId}
-          index={index}
-          setBoard={setBoard}
-          removeId={removeId}
-          board={board}
-          addNewCard={addNewCard}
-          removeCard={removeCard}
+        <Column  
+          column={column} 
+          columnId={column.columnId} 
+          index={index} 
+          setBoard={setBoard} 
+          removeId={removeId} 
+          board={board} 
+          addNewCard={addNewCard} 
+          removeCard={removeCard} 
+          moveCard={moveCard}
+          lastColumn={lastColumn}
         />
       </Grid>
     );
