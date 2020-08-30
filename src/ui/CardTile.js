@@ -11,11 +11,11 @@ import {
   Dialog,
   DialogActions,
   DialogTitle,
-  Box
+  Box,
 } from "@material-ui/core";
-import CloseTwoToneIcon from '@material-ui/icons/CloseTwoTone';
-import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import ChevronRightIcon from '@material-ui/icons/ChevronRight';
+import CloseTwoToneIcon from "@material-ui/icons/CloseTwoTone";
+import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
+import ChevronRightIcon from "@material-ui/icons/ChevronRight";
 
 import ModalForm from "./ModalForm";
 import CardAccordion from "./CardAccordion";
@@ -27,28 +27,22 @@ const useStyles = makeStyles({
     backgroundColor: "#fce4ec",
   },
   rootColor: {
-    maxWidth: '90%',
-    marginLeft: '5%',
-    backgroundColor: 'lightgreen',
+    maxWidth: "90%",
+    marginLeft: "5%",
+    backgroundColor: "lightgreen",
   },
   cardContent: {
-    paddingBottom: '0px'
-  },
-  bullet: {
-    display: "inline-block",
-    margin: "0 2px",
-    transform: "scale(0.8)",
+    paddingBottom: "0px",
   },
   title: {
-    fontSize: 14,
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'center',
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center",
   },
   moveIcons: {
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'center',
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center",
   },
   pos: {
     marginBottom: 12,
@@ -57,7 +51,7 @@ const useStyles = makeStyles({
 });
 
 const CardTile = (props) => {
-  const [open, setOpen] = useState(false)
+  const [open, setOpen] = useState(false);
   const classes = useStyles();
   const { card } = props;
   const [selectedDate, setSelectedDate] = useState(
@@ -67,33 +61,33 @@ const CardTile = (props) => {
   const handleDateChange = (date) => {
     setSelectedDate(date);
   };
-  
-    const handleClickOpen = () => {
-    setOpen(true)
-  }
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
 
   const handleClose = () => {
-    setOpen(false)
-  }
-  
-    const handleDelete = () => {
-    props.removeCard(card.id, props.columnId)
-    handleClose()
-  }
+    setOpen(false);
+  };
+
+  const handleDelete = () => {
+    props.removeCard(card.id, props.columnId);
+    handleClose();
+  };
 
   const handleMoveRight = () => {
     if (props.lastColumn) {
-      return
+      return;
     }
-    props.moveCard(props.card.id, props.columnIndex, props.columnIndex + 1)
-  }
+    props.moveCard(props.card.id, props.columnIndex, props.columnIndex + 1);
+  };
 
   const handleMoveLeft = () => {
     if (props.columnIndex === 0) {
-      return
+      return;
     }
-    props.moveCard(props.card.id, props.columnIndex, props.columnIndex - 1)
-  }
+    props.moveCard(props.card.id, props.columnIndex, props.columnIndex - 1);
+  };
 
   return (
     <Draggable draggableId={card.title} index={props.index}>
@@ -109,35 +103,34 @@ const CardTile = (props) => {
             <CardContent>
               <Typography className={classes.title} gutterBottom variant="h6">
                 {card.title}
-              <IconButton
-                size='small'
-                onClick={handleClickOpen}
-              >
-                <CloseTwoToneIcon/>
-              </IconButton>
+                <IconButton size="small" onClick={handleClickOpen}>
+                  <CloseTwoToneIcon />
+                </IconButton>
               </Typography>
-              <Box className={classes.moveIcons}>
-                <IconButton onClick={handleMoveLeft} size='small'>
-                  <ChevronLeftIcon/>
-                </IconButton>
-                <IconButton onClick={handleMoveRight} size='small'>
-                  <ChevronRightIcon/>
-                </IconButton>
-              </Box>
             </CardContent>
             <CardAccordion
               description={card.description}
               selectedDate={selectedDate}
               handleDateChange={handleDateChange}
             />
+            <Box className={classes.moveIcons}>
+              <IconButton onClick={handleMoveLeft} size="small">
+                <ChevronLeftIcon />
+              </IconButton>
+              <IconButton onClick={handleMoveRight} size="small">
+                <ChevronRightIcon />
+              </IconButton>
+            </Box>
           </Card>
           <Dialog
             open={open}
             onClose={handleClose}
             aria-labelledby="alert-dialog-title"
             aria-describedby="alert-dialog-description"
-           >
-            <DialogTitle id="alert-dialog-title">{"Delete this card?"}</DialogTitle>
+          >
+            <DialogTitle id="alert-dialog-title">
+              {"Delete this card?"}
+            </DialogTitle>
             <DialogActions>
               <Button onClick={handleClose} color="primary">
                 No
