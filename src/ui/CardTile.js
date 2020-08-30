@@ -10,12 +10,8 @@ import {
   IconButton,
   Dialog,
   DialogActions,
-  DialogContent,
-  DialogContentText,
   DialogTitle,
-  TextareaAutosize
 } from "@material-ui/core";
-import ModalForm from './ModalForm'
 import CloseTwoToneIcon from '@material-ui/icons/CloseTwoTone';
 
 const useStyles = makeStyles({
@@ -63,6 +59,20 @@ const CardTile = (props) => {
     handleClose()
   }
 
+  const handleMoveRight = () => {
+    if (props.lastColumn) {
+      return
+    }
+    props.moveCard(props.card.id, props.columnIndex, props.columnIndex + 1)
+  }
+
+  const handleMoveLeft = () => {
+    if (props.columnIndex === 0) {
+      return
+    }
+    props.moveCard(props.card.id, props.columnIndex, props.columnIndex - 1)
+  }
+
   return (
     <Draggable draggableId={props.card.id} index={props.index}>
       {(provided, snapshot) => (
@@ -85,6 +95,12 @@ const CardTile = (props) => {
               >
                 <CloseTwoToneIcon/>
               </IconButton>
+              <Button onClick={handleMoveRight}>
+                right
+              </Button>
+              <Button onClick={handleMoveLeft}>
+                left
+              </Button>
               </Typography>
             </CardContent>
           </Card>
