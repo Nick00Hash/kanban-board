@@ -6,7 +6,6 @@ import {
 } from "@material-ui/core/styles";
 
 import ContainerOfColumns from "./ui/ContainerOfColumns";
-import RaisedAppBar from "./ui/AppBar";
 
 const theme = createMuiTheme({
   palette: {
@@ -40,7 +39,6 @@ const App = () => {
   return (
     <ThemeProvider theme={theme}>
       <div className={classes.appContainer}>
-        <RaisedAppBar />
         <ContainerOfColumns
           globalCount={globalCount}
           globalIncrement={globalIncrement}
