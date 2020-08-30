@@ -76,6 +76,7 @@ function SimpleModal(props) {
           <ModalForm
             id={props.column.columnId}
             addNewCard={props.addNewCard}
+            handleClose={handleClose}
           />
         </p>
       </div>
@@ -90,7 +91,7 @@ const Column = (props) => {
   const mappedCards = props.column.cards.map((card, index) => {
     return (
       <Grid className={classes.card} key={card.title}>
-        <CardTile key={card.title} card={card} index={index}/>
+        <CardTile key={card.title} card={card} index={index} removeCard={props.removeCard} columnId={props.column.columnId}/>
       </Grid>
     );
   });

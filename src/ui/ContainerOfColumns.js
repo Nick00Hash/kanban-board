@@ -24,13 +24,13 @@ const ContainerOfColumns = (props) => {
       title: "To-Do",
       cards: [
         {
-          belongsToColumn: "1",
+          id: "44",
           title: "Make a trello board",
           description: "We need to make a Camden, NJ board",
           due_date: Date.now(),
         },
         {
-          belongsToColumn: "1",
+          id: "33",
           title: "Make a trello board2222",
           description: "We need to make a Camden, NJ board2222",
           due_date: Date.now(),
@@ -42,13 +42,13 @@ const ContainerOfColumns = (props) => {
       title: "In Progress",
       cards: [
         {
-          belongsToColumn: "2",
+          id: "22",
           title: "Make a trello board inprogress",
           description: "We need to make a Camden, NJ board inprogress",
           due_date: Date.now(),
         },
         {
-          belongsToColumn: "2",
+          id: "11",
           title: "Make a trello board inprogress33333",
           description: "We need to make a Camden, NJ board inprogress3333",
           due_date: Date.now(),
@@ -87,6 +87,13 @@ const ContainerOfColumns = (props) => {
     setColumnOrder(columnOrder.filter((columnId) => columnId != Id ))
   }
 
+  const removeCard = (id, columnId) => {
+    let newBoard = Array.from(board)
+    let columnIndex = newBoard.findIndex(column => column.columnId === columnId)
+    newBoard[columnIndex].cards = newBoard[columnIndex].cards.filter(card => card.id != id)
+    setBoard(newBoard)
+  }
+
   const onDragEnd = (result) => {
     if (!result.destination) {
       return;
@@ -109,7 +116,7 @@ const ContainerOfColumns = (props) => {
 
     const sourceColumn = board.find((column) => column.columnId === result.source.droppableId)
     const destinationColumn = board.find((column) => column.columnId === result.destination.droppableId)
-    const draggedCard = sourceColumn.cards.find(card => card.title === result.draggableId)
+    const draggedCard = sourceColumn.cards.find(card => card.id === result.draggableId)
     
     if (sourceColumn === destinationColumn) {
       const cards = Array.from(sourceColumn.cards)
@@ -168,7 +175,16 @@ const ContainerOfColumns = (props) => {
         xs={dynamicColumnMobile}
         md={dynamicColumnDesktop}
       >
-        <Column column={column} columnId={column.columnId} index={index} setBoard={setBoard} removeId={removeId} board={board} addNewCard={addNewCard}/>
+        <Column  
+          column={column} 
+          columnId={column.columnId} 
+          index={index} 
+          setBoard={setBoard} 
+          removeId={removeId} 
+          board={board} 
+          addNewCard={addNewCard} 
+          removeCard={removeCard} 
+        />
       </Grid>
     );
   });

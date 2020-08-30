@@ -27,6 +27,7 @@ const ModalForm = (props) => {
   const handleSubmit = (event) => {
     event.preventDefault();
     props.addNewCard(newCard, props.id)
+    props.handleClose()
   }
 
   const classes = useStyles();
