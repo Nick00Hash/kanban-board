@@ -23,7 +23,7 @@ const RemoveColumnButton = (props) => {
   const removeColumn = () => {
     removeId(columnId)
     let remainingColumns = board.filter((column) => {
-      return column.columnId != columnId;
+      return column.columnId !== columnId;
     });
     setBoard(remainingColumns);
   };

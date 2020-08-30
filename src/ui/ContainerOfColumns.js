@@ -1,11 +1,9 @@
 import React, { useState } from "react";
 import { DragDropContext, Droppable } from "react-beautiful-dnd";
-import { Grid, Typography, Paper } from "@material-ui/core";
+import { Grid } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 
 import Column from "./Column";
-import NewColumnButton from "./NewColumnButton";
-import RemoveColumnButton from "./RemoveColumnButton";
 import RaisedAppBar from "./AppBar";
 
 const useStyles = makeStyles({
