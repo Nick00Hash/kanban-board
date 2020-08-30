@@ -1,7 +1,7 @@
-import React, { useState } from 'react'
-import { TextField } from "@material-ui/core"
-import Button from '@material-ui/core/Button';
-import { makeStyles } from '@material-ui/core/styles';
+import React, { useState } from "react";
+import { TextField } from "@material-ui/core";
+import Button from "@material-ui/core/Button";
+import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles({
   spacing: {
@@ -10,12 +10,12 @@ const useStyles = makeStyles({
 });
 
 const ModalForm = (props) => {
-
+  const { handleClose } = props;
   const [newCard, setNewCard] = useState({
     title: "",
     description: "",
-    id: Date.now()
-  })
+    id: Date.now(),
+  });
 
   const handleFieldChange = (event) => {
     setNewCard({
@@ -26,22 +26,23 @@ const ModalForm = (props) => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    props.addNewCard(newCard, props.id)
-  }
+    props.addNewCard(newCard, props.id);
+    handleClose();
+  };
 
   const classes = useStyles();
 
   return (
     <form onSubmit={handleSubmit}>
-      <TextField 
+      <TextField
         className={classes.spacing}
-        id="title" 
-        label="Title" 
+        id="title"
+        label="Title"
         variant="outlined"
         value={newCard.title}
         onChange={handleFieldChange}
       />
-      <div/>
+      <div />
       <TextField
         className={classes.spacing}
         id="description"
@@ -50,13 +51,12 @@ const ModalForm = (props) => {
         value={newCard.description}
         onChange={handleFieldChange}
       />
-      <div/>
-      <Button  type="submit" variant="contained" color="primary">
+      <div />
+      <Button type="submit" variant="contained" color="primary">
         New Card
-      </Button> 
+      </Button>
     </form>
-    
   );
-}
+};
 
-export default ModalForm
+export default ModalForm;
