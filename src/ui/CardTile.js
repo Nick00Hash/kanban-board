@@ -90,7 +90,7 @@ const CardTile = (props) => {
   };
 
   return (
-    <Draggable draggableId={card.title} index={props.index}>
+    <Draggable draggableId={card.id} index={props.index}>
       {(provided, snapshot) => (
         <div
           {...provided.draggableProps}
