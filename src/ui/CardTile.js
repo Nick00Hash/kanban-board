@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "date-fns";
+// import "date-fns";
 import { Draggable } from "react-beautiful-dnd";
 import { makeStyles } from "@material-ui/core/styles";
 import {
@@ -52,12 +52,14 @@ const CardTile = (props) => {
   const [open, setOpen] = useState(false);
   const classes = useStyles();
   const { card } = props;
-  const [selectedDate, setSelectedDate] = useState(
-    new Date("2020-08-18T21:11:54")
-  );
+  // const [selectedDate, setSelectedDate] = useState(
+  //   new Date("2020-08-18T21:11:54")
+  // );
+
+  const selectedDate = ""
 
   const handleDateChange = (date) => {
-    setSelectedDate(date);
+    // setSelectedDate(date);
   };
 
   const handleClickOpen = () => {
