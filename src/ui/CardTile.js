@@ -4,24 +4,21 @@ import { Draggable } from "react-beautiful-dnd";
 import { makeStyles } from "@material-ui/core/styles";
 import {
   Card,
-  CardActions,
   CardContent,
   Button,
   Typography,
   IconButton,
   Dialog,
   DialogActions,
-  DialogContent,
-  DialogContentText,
   DialogTitle,
-  TextareaAutosize
+  Box
 } from "@material-ui/core";
+import CloseTwoToneIcon from '@material-ui/icons/CloseTwoTone';
+import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
+import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 
 import ModalForm from "./ModalForm";
 import CardAccordion from "./CardAccordion";
-
-import CloseTwoToneIcon from '@material-ui/icons/CloseTwoTone';
-
 
 const useStyles = makeStyles({
   root: {
@@ -31,19 +28,28 @@ const useStyles = makeStyles({
   },
   rootColor: {
     maxWidth: '90%',
+    marginLeft: '5%',
     backgroundColor: 'lightgreen',
+  },
+  cardContent: {
+    paddingBottom: '0px'
   },
   bullet: {
     display: "inline-block",
     margin: "0 2px",
     transform: "scale(0.8)",
   },
-//  title: {
-//    fontSize: 14,
-//    display: 'flex',
-//    justifyContent: 'space-between',
-//    alignItems: 'center',
-//  },
+  title: {
+    fontSize: 14,
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  moveIcons: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
   pos: {
     marginBottom: 12,
   },
@@ -74,7 +80,21 @@ const CardTile = (props) => {
     props.removeCard(card.id, props.columnId)
     handleClose()
   }
-  
+
+  const handleMoveRight = () => {
+    if (props.lastColumn) {
+      return
+    }
+    props.moveCard(props.card.id, props.columnIndex, props.columnIndex + 1)
+  }
+
+  const handleMoveLeft = () => {
+    if (props.columnIndex === 0) {
+      return
+    }
+    props.moveCard(props.card.id, props.columnIndex, props.columnIndex - 1)
+  }
+
   return (
     <Draggable draggableId={card.title} index={props.index}>
       {(provided, snapshot) => (
@@ -89,7 +109,6 @@ const CardTile = (props) => {
             <CardContent>
               <Typography className={classes.title} gutterBottom variant="h6">
                 {card.title}
-
               <IconButton
                 size='small'
                 onClick={handleClickOpen}
@@ -97,6 +116,14 @@ const CardTile = (props) => {
                 <CloseTwoToneIcon/>
               </IconButton>
               </Typography>
+              <Box className={classes.moveIcons}>
+                <IconButton onClick={handleMoveLeft} size='small'>
+                  <ChevronLeftIcon/>
+                </IconButton>
+                <IconButton onClick={handleMoveRight} size='small'>
+                  <ChevronRightIcon/>
+                </IconButton>
+              </Box>
             </CardContent>
             <CardAccordion
               description={card.description}
