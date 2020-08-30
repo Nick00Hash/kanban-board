@@ -3,7 +3,6 @@ import { Draggable } from 'react-beautiful-dnd'
 import { makeStyles } from "@material-ui/core/styles";
 import {
   Card,
-  CardActions,
   CardContent,
   Button,
   Typography,
@@ -11,8 +10,11 @@ import {
   Dialog,
   DialogActions,
   DialogTitle,
+  Box
 } from "@material-ui/core";
 import CloseTwoToneIcon from '@material-ui/icons/CloseTwoTone';
+import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
+import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 
 const useStyles = makeStyles({
   root: {
@@ -22,7 +24,11 @@ const useStyles = makeStyles({
   },
   rootColor: {
     maxWidth: '90%',
+    marginLeft: '5%',
     backgroundColor: 'lightgreen',
+  },
+  cardContent: {
+    paddingBottom: '0px'
   },
   bullet: {
     display: "inline-block",
@@ -31,6 +37,11 @@ const useStyles = makeStyles({
   },
   title: {
     fontSize: 14,
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  moveIcons: {
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
@@ -82,7 +93,7 @@ const CardTile = (props) => {
           ref={provided.innerRef}
         >
           <Card className={ (snapshot.isDragging ? classes.rootColor : classes.root) }>
-            <CardContent>
+            <CardContent className={classes.cardContent}>
               <Typography 
                 className={classes.title} 
                 color="textSecondary" 
@@ -95,13 +106,15 @@ const CardTile = (props) => {
               >
                 <CloseTwoToneIcon/>
               </IconButton>
-              <Button onClick={handleMoveRight}>
-                right
-              </Button>
-              <Button onClick={handleMoveLeft}>
-                left
-              </Button>
               </Typography>
+              <Box className={classes.moveIcons}>
+                <IconButton onClick={handleMoveLeft} size='small'>
+                  <ChevronLeftIcon/>
+                </IconButton>
+                <IconButton onClick={handleMoveRight} size='small'>
+                  <ChevronRightIcon/>
+                </IconButton>
+              </Box>
             </CardContent>
           </Card>
           <Dialog
