@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Draggable } from 'react-beautiful-dnd'
 import { makeStyles } from "@material-ui/core/styles";
 import {
@@ -7,8 +7,16 @@ import {
   CardContent,
   Button,
   Typography,
+  IconButton,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+  TextareaAutosize
 } from "@material-ui/core";
 import ModalForm from './ModalForm'
+import CloseTwoToneIcon from '@material-ui/icons/CloseTwoTone';
 
 const useStyles = makeStyles({
   root: {
@@ -18,7 +26,7 @@ const useStyles = makeStyles({
   },
   rootColor: {
     maxWidth: '90%',
-    backgroundColor: 'lightgreen'
+    backgroundColor: 'lightgreen',
   },
   bullet: {
     display: "inline-block",
@@ -27,6 +35,9 @@ const useStyles = makeStyles({
   },
   title: {
     fontSize: 14,
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
   },
   pos: {
     marginBottom: 12,
@@ -35,11 +46,25 @@ const useStyles = makeStyles({
 });
 
 const CardTile = (props) => {
+  const [open, setOpen] = useState(false)
   const classes = useStyles();
   const bull = <span className={classes.bullet}>•</span>;
 
+  const handleClickOpen = () => {
+    setOpen(true)
+  }
+
+  const handleClose = () => {
+    setOpen(false)
+  }
+
+  const handleDelete = () => {
+    props.removeCard(props.card.id, props.columnId)
+    handleClose()
+  }
+
   return (
-    <Draggable draggableId={props.card.title} index={props.index}>
+    <Draggable draggableId={props.card.id} index={props.index}>
       {(provided, snapshot) => (
         <div
           {...provided.draggableProps}
@@ -54,9 +79,31 @@ const CardTile = (props) => {
                 gutterBottom
               >
                 {props.card.title}
+              <IconButton
+                size='small'
+                onClick={handleClickOpen}
+              >
+                <CloseTwoToneIcon/>
+              </IconButton>
               </Typography>
             </CardContent>
           </Card>
+          <Dialog
+            open={open}
+            onClose={handleClose}
+            aria-labelledby="alert-dialog-title"
+            aria-describedby="alert-dialog-description"
+           >
+            <DialogTitle id="alert-dialog-title">{"Delete this card?"}</DialogTitle>
+            <DialogActions>
+              <Button onClick={handleClose} color="primary">
+                No
+              </Button>
+              <Button onClick={handleDelete} color="primary" autoFocus>
+                Yes
+              </Button>
+            </DialogActions>
+          </Dialog>
         </div>
       )}
     </Draggable>
