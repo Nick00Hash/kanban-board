@@ -153,7 +153,7 @@ const ContainerOfColumns = (props) => {
     const draggedCard = sourceColumn.cards.find(
       (card) => card.id === result.draggableId
     );
-    debugger;
+    
     if (sourceColumn === destinationColumn) {
       const cards = Array.from(sourceColumn.cards);
       cards.splice(result.source.index, 1);
