@@ -1,7 +1,13 @@
 import React, { useState } from 'react'
 import { makeStyles } from '@material-ui/core/styles';
 import { Droppable, Draggable } from 'react-beautiful-dnd'
-import { Grid, Typography, Paper, Button, Modal } from "@material-ui/core";
+import { 
+  Grid, 
+  Typography, 
+  Paper, 
+  Button, 
+  Modal, 
+} from "@material-ui/core";
 
 import ModalForm from "./ModalForm"
 import CardTile from "./CardTile";
@@ -33,6 +39,9 @@ const useStyles = makeStyles((theme) => ({
   columnTitle: {
     textAlign: "center",
     margin: "1rem",
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
   },
 }));
 
@@ -115,6 +124,12 @@ const Column = (props) => {
           <Paper>
             <span className={classes.inline}>
               <Typography className={classes.columnTitle} variant="h4" {...provided.dragHandleProps}>
+                <SimpleModal
+                  column={props.column}
+                  addNewCard={props.addNewCard}
+                >
+                  <Button variant="contained" />
+                </SimpleModal>
                 {props.column.title}{" "}
                 <RemoveColumnButton
                   board={props.board}
@@ -133,13 +148,6 @@ const Column = (props) => {
               >
                 {mappedCards}
                 {provided.placeholder}
-                <SimpleModal
-                  column={props.column}
-                  addNewCard={props.addNewCard}
-                >
-                  <Button variant="contained" >
-                  </Button>
-                </SimpleModal>
               </div>
             )}
           </Droppable>
