@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
-import { Draggable } from 'react-beautiful-dnd'
+import React, { useState } from "react";
+import "date-fns";
+import { Draggable } from "react-beautiful-dnd";
 import { makeStyles } from "@material-ui/core/styles";
 import {
   Card,
@@ -10,41 +11,38 @@ import {
   Dialog,
   DialogActions,
   DialogTitle,
-  Box
+  Box,
 } from "@material-ui/core";
-import CloseTwoToneIcon from '@material-ui/icons/CloseTwoTone';
-import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import ChevronRightIcon from '@material-ui/icons/ChevronRight';
+import CloseTwoToneIcon from "@material-ui/icons/CloseTwoTone";
+import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
+import ChevronRightIcon from "@material-ui/icons/ChevronRight";
+
+import ModalForm from "./ModalForm";
+import CardAccordion from "./CardAccordion";
 
 const useStyles = makeStyles({
   root: {
-    maxWidth: '90%',
-    marginLeft: '5%',
+    maxWidth: "90%",
+    marginLeft: "5%",
     backgroundColor: "#fce4ec",
   },
   rootColor: {
-    maxWidth: '90%',
-    marginLeft: '5%',
-    backgroundColor: 'lightgreen',
+    maxWidth: "90%",
+    marginLeft: "5%",
+    backgroundColor: "lightgreen",
   },
   cardContent: {
-    paddingBottom: '0px'
-  },
-  bullet: {
-    display: "inline-block",
-    margin: "0 2px",
-    transform: "scale(0.8)",
+    paddingBottom: "0px",
   },
   title: {
-    fontSize: 14,
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'center',
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center",
   },
   moveIcons: {
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'center',
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center",
   },
   pos: {
     marginBottom: 12,
@@ -53,77 +51,86 @@ const useStyles = makeStyles({
 });
 
 const CardTile = (props) => {
-  const [open, setOpen] = useState(false)
+  const [open, setOpen] = useState(false);
   const classes = useStyles();
-  const bull = <span className={classes.bullet}>•</span>;
+  const { card } = props;
+  const [selectedDate, setSelectedDate] = useState(
+    new Date("2020-08-18T21:11:54")
+  );
+
+  const handleDateChange = (date) => {
+    setSelectedDate(date);
+  };
 
   const handleClickOpen = () => {
-    setOpen(true)
-  }
+    setOpen(true);
+  };
 
   const handleClose = () => {
-    setOpen(false)
-  }
+    setOpen(false);
+  };
 
   const handleDelete = () => {
-    props.removeCard(props.card.id, props.columnId)
-    handleClose()
-  }
+    props.removeCard(card.id, props.columnId);
+    handleClose();
+  };
 
   const handleMoveRight = () => {
     if (props.lastColumn) {
-      return
+      return;
     }
-    props.moveCard(props.card.id, props.columnIndex, props.columnIndex + 1)
-  }
+    props.moveCard(props.card.id, props.columnIndex, props.columnIndex + 1);
+  };
 
   const handleMoveLeft = () => {
     if (props.columnIndex === 0) {
-      return
+      return;
     }
-    props.moveCard(props.card.id, props.columnIndex, props.columnIndex - 1)
-  }
+    props.moveCard(props.card.id, props.columnIndex, props.columnIndex - 1);
+  };
 
   return (
-    <Draggable draggableId={props.card.id} index={props.index}>
+    <Draggable draggableId={card.id} index={props.index}>
       {(provided, snapshot) => (
         <div
           {...provided.draggableProps}
           {...provided.dragHandleProps}
           ref={provided.innerRef}
         >
-          <Card className={ (snapshot.isDragging ? classes.rootColor : classes.root) }>
-            <CardContent className={classes.cardContent}>
-              <Typography 
-                className={classes.title} 
-                color="textSecondary" 
-                gutterBottom
-              >
-                {props.card.title}
-              <IconButton
-                size='small'
-                onClick={handleClickOpen}
-              >
-                <CloseTwoToneIcon/>
-              </IconButton>
+          <Card
+            className={snapshot.isDragging ? classes.rootColor : classes.root}
+          >
+            <CardContent>
+              <Typography className={classes.title} gutterBottom variant="h6">
+                {card.title}
+                <IconButton size="small" onClick={handleClickOpen}>
+                  <CloseTwoToneIcon />
+                </IconButton>
               </Typography>
-              <Box className={classes.moveIcons}>
-                <IconButton onClick={handleMoveLeft} size='small'>
-                  <ChevronLeftIcon/>
-                </IconButton>
-                <IconButton onClick={handleMoveRight} size='small'>
-                  <ChevronRightIcon/>
-                </IconButton>
-              </Box>
             </CardContent>
+            <CardAccordion
+              description={card.description}
+              selectedDate={selectedDate}
+              handleDateChange={handleDateChange}
+            />
+            <Box className={classes.moveIcons}>
+              <IconButton onClick={handleMoveLeft} size="small">
+                <ChevronLeftIcon />
+              </IconButton>
+              <IconButton onClick={handleMoveRight} size="small">
+                <ChevronRightIcon />
+              </IconButton>
+            </Box>
           </Card>
           <Dialog
             open={open}
             onClose={handleClose}
             aria-labelledby="alert-dialog-title"
             aria-describedby="alert-dialog-description"
-           >
-            <DialogTitle id="alert-dialog-title">{"Delete this card?"}</DialogTitle>
+          >
+            <DialogTitle id="alert-dialog-title">
+              {"Delete this card?"}
+            </DialogTitle>
             <DialogActions>
               <Button onClick={handleClose} color="primary">
                 No
