@@ -6,6 +6,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import Column from "./Column";
 import NewColumnButton from "./NewColumnButton";
 import RemoveColumnButton from "./RemoveColumnButton";
+import RaisedAppBar from "./AppBar";
 
 const useStyles = makeStyles({
   columnContainer: {
@@ -16,61 +17,62 @@ const useStyles = makeStyles({
 
 const ContainerOfColumns = (props) => {
   const classes = useStyles();
-  const { globalCount, globalIncrement, DATA } = props;
+  const { globalCount, globalIncrement } = props;
+
   const [columnOrder, setColumnOrder] = useState(["1", "2", "3"]);
-  // const [board, setBoard] = useState([
-  //   {
-  //     columnId: "1",
-  //     title: "To-Do",
-  //     cards: [
-  //       {
-  //         id: "44",
-  //         title: "Make a trello board",
-  //         description: "We need to make a Camden, NJ board",
-  //         due_date: Date.now(),
-  //       },
-  //       {
-  //         id: "33",
-  //         title: "Make a trello board2222",
-  //         description: "We need to make a Camden, NJ board2222",
-  //         due_date: Date.now(),
-  //       },
-  //     ],
-  //   },
-  //   {
-  //     columnId: "2",
-  //     title: "In Progress",
-  //     cards: [
-  //       {
-  //         id: "22",
-  //         title: "Make a trello board inprogress",
-  //         description: "We need to make a Camden, NJ board inprogress",
-  //         due_date: Date.now(),
-  //       },
-  //       {
-  //         id: "11",
-  //         title: "Make a trello board inprogress33333",
-  //         description: "We need to make a Camden, NJ board inprogress3333",
-  //         due_date: Date.now(),
-  //       },
-  //     ],
-  //   },
-  //   {
-  //     columnId: "3",
-  //     title: "Done",
-  //     cards: [
-  //       // {
-  //       //   belongsToColumn: "3",
-  //       //   title: "Make a trello board done",
-  //       //   description: "We need to make a Camden, NJ board done",
-  //       //   due_date: Date.now(),
-  //       // },
-  //     ],
-  //   },
-  // ]); // Complex state containing user data of columns/cards/etc
+  const [board, setBoard] = useState([
+    {
+      columnId: "1",
+      title: "To-Do",
+      cards: [
+        {
+          id: "44",
+          title: "Make a trello board",
+          description: "We need to make a Camden, NJ board",
+          due_date: Date.now(),
+        },
+        {
+          id: "33",
+          title: "Make a trello board2222",
+          description: "We need to make a Camden, NJ board2222",
+          due_date: Date.now(),
+        },
+      ],
+    },
+    {
+      columnId: "2",
+      title: "In Progress",
+      cards: [
+        {
+          id: "22",
+          title: "Make a trello board inprogress",
+          description: "We need to make a Camden, NJ board inprogress",
+          due_date: Date.now(),
+        },
+        {
+          id: "11",
+          title: "Make a trello board inprogress33333",
+          description: "We need to make a Camden, NJ board inprogress3333",
+          due_date: Date.now(),
+        },
+      ],
+    },
+    {
+      columnId: "3",
+      title: "Done",
+      cards: [
+        // {
+        //   belongsToColumn: "3",
+        //   title: "Make a trello board done",
+        //   description: "We need to make a Camden, NJ board done",
+        //   due_date: Date.now(),
+        // },
+      ],
+    },
+  ]); // Complex state containing user data of columns/cards/etc
 
   const addNewCard = (newCard, columnId) => {
-    let newBoard = Array.from(DATA);
+    let newBoard = Array.from(board);
     let columnIndex = newBoard.findIndex(
       (column) => column.columnId === columnId
     );
@@ -209,6 +211,13 @@ const ContainerOfColumns = (props) => {
 
   return (
     <>
+      <RaisedAppBar
+        board={board}
+        setBoard={setBoard}
+        addNewId={addNewId}
+        globalCount={globalCount}
+        globalIncrement={globalIncrement}
+      />
       <DragDropContext onDragEnd={onDragEnd}>
         <Droppable
           droppableId="columns-board"
@@ -231,13 +240,6 @@ const ContainerOfColumns = (props) => {
           )}
         </Droppable>
       </DragDropContext>
-      <NewColumnButton
-        board={board}
-        setBoard={setBoard}
-        addNewId={addNewId}
-        globalCount={globalCount}
-        globalIncrement={globalIncrement}
-      />
     </>
   );
 };
