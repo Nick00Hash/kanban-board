@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { TextField } from "@material-ui/core";
+import { TextField, Typography } from "@material-ui/core";
 import Button from "@material-ui/core/Button";
 import { makeStyles } from "@material-ui/core/styles";
 
@@ -14,8 +14,9 @@ const ModalForm = (props) => {
   const [newCard, setNewCard] = useState({
     title: "",
     description: "",
-    id: Date.now(),
+    id: Date.now().toString(),
   });
+  const [error, setError] = useState(null)
 
   const handleFieldChange = (event) => {
     setNewCard({
@@ -26,12 +27,21 @@ const ModalForm = (props) => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
+    if (newCard.title === "") {
+      setError("Title cannot be empty")
+      return
+    }
     props.addNewCard(newCard, props.id);
     handleClose();
   };
 
 
   const classes = useStyles();
+
+  let errorMsg = <></>
+  if (error) {
+    errorMsg = <Typography color='error' >{error}</Typography>
+  }
 
   return (
     <form onSubmit={handleSubmit}>
@@ -40,6 +50,7 @@ const ModalForm = (props) => {
         id="title"
         label="Title"
         variant="outlined"
+        fullWidth
         value={newCard.title}
         onChange={handleFieldChange}
       />
@@ -49,10 +60,13 @@ const ModalForm = (props) => {
         id="description"
         label="Description"
         variant="outlined"
+        multiline
+        fullWidth
         value={newCard.description}
         onChange={handleFieldChange}
       />
       <div />
+      {errorMsg}
       <Button type="submit" variant="contained" color="primary">
         New Card
       </Button>

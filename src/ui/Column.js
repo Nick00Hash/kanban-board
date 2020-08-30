@@ -76,20 +76,18 @@ const SimpleModal = (props) => {
         +
       </Button>
       <Modal
-        id
         open={open}
         onClose={handleClose}
         aria-labelledby="simple-modal-title"
         aria-describedby="simple-modal-description"
       >
         <div style={modalStyle} className={classes.paper}>
-          <p id="simple-modal-title">
-            <ModalForm
-              id={props.column.columnId}
-              addNewCard={props.addNewCard}
-              handleClose={handleClose}
-            />
-          </p>
+          <Typography variant='h5'>Add New Card</Typography>
+          <ModalForm
+            id={props.column.columnId}
+            addNewCard={props.addNewCard}
+            handleClose={handleClose}
+          />
         </div>
       </Modal>
     </div>
