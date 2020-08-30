@@ -5,6 +5,7 @@ import {
   ThemeProvider,
 } from "@material-ui/core/styles";
 
+import DATA from "./DATA";
 import ContainerOfColumns from "./ui/ContainerOfColumns";
 import RaisedAppBar from "./ui/AppBar";
 
@@ -32,6 +33,7 @@ const useStyles = makeStyles((theme) => ({
 const App = () => {
   const classes = useStyles();
   const [globalCount, setGlobalCount] = useState(4);
+  const [board, setBoard] = useState(DATA);
 
   const globalIncrement = () => {
     setGlobalCount(globalCount + 1);
@@ -42,6 +44,7 @@ const App = () => {
       <div className={classes.appContainer}>
         <RaisedAppBar />
         <ContainerOfColumns
+          DATA={DATA}
           globalCount={globalCount}
           globalIncrement={globalIncrement}
         />
