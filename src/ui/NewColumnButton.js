@@ -4,7 +4,14 @@ import Button from "@material-ui/core/Button";
 import AddBoxIcon from "@material-ui/icons/AddBox";
 
 const NewColumnButton = (props) => {
-  const { board, setBoard, globalCount, globalIncrement, addNewId } = props;
+  const {
+    board,
+    setBoard,
+    globalCount,
+    globalIncrement,
+    addNewId,
+    widthPlus,
+  } = props;
 
   const colors = [
     "#1BB0CE",
@@ -35,22 +42,23 @@ const NewColumnButton = (props) => {
     "#E1F5C4",
     "#429398",
     "#B0A18F",
-    "#DFCDB4"
-  ]
+    "#DFCDB4",
+  ];
 
-  const addNewColumn = () => {
+  const addNewColumn = (props) => {
     let idString = globalCount.toString();
-    addNewId(idString)
+    addNewId(idString);
     setBoard([
       ...board,
       {
         columnId: idString,
         title: "Click Edit to Change Title",
         cards: [],
-        color: colors[Math.floor(Math.random() * colors.length)]
+        color: colors[Math.floor(Math.random() * colors.length)],
       },
     ]);
     globalIncrement();
+    widthPlus();
   };
 
   return (

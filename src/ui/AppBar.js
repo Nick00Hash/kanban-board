@@ -30,14 +30,21 @@ const ElevationScroll = (props) => {
 };
 
 const RaisedAppBar = (props) => {
-  const { board, setBoard, addNewId, globalCount, globalIncrement } = props;
+  const {
+    board,
+    setBoard,
+    addNewId,
+    globalCount,
+    globalIncrement,
+    widthPlus,
+  } = props;
 
   const classes = useStyles();
   return (
     <React.Fragment>
       <CssBaseline />
       <ElevationScroll {...props}>
-        <AppBar color='secondary'>
+        <AppBar color="secondary">
           <Toolbar>
             <Typography className={classes.title} variant="h6">
               Welcome to your Kanban Board!
@@ -48,6 +55,7 @@ const RaisedAppBar = (props) => {
               addNewId={addNewId}
               globalCount={globalCount}
               globalIncrement={globalIncrement}
+              widthPlus={widthPlus}
             />
           </Toolbar>
         </AppBar>

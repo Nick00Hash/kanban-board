@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import { 
+import {
   Dialog,
   DialogActions,
   DialogTitle,
   Button,
-  IconButton
+  IconButton,
 } from "@material-ui/core";
 import DeleteForeverIcon from "@material-ui/icons/DeleteForever";
 import { makeStyles } from "@material-ui/core/styles";
@@ -16,16 +16,17 @@ const useStyles = makeStyles({
 });
 
 const RemoveColumnButton = (props) => {
-  const { board, setBoard, columnId, removeId } = props;
+  const { board, setBoard, columnId, removeId, widthMinus } = props;
   const classes = useStyles();
-  const [open, setOpen] = useState(false)
+  const [open, setOpen] = useState(false);
 
   const removeColumn = () => {
-    removeId(columnId)
+    removeId(columnId);
     let remainingColumns = board.filter((column) => {
       return column.columnId !== columnId;
     });
     setBoard(remainingColumns);
+    widthMinus();
   };
 
   const handleOpen = () => {
@@ -38,10 +39,7 @@ const RemoveColumnButton = (props) => {
 
   return (
     <div>
-      <IconButton
-        aria-label="add"
-        onClick={handleOpen}
-      >
+      <IconButton aria-label="add" onClick={handleOpen}>
         <DeleteForeverIcon />
       </IconButton>
       <Dialog
@@ -50,7 +48,9 @@ const RemoveColumnButton = (props) => {
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
       >
-        <DialogTitle id="alert-dialog-title">{"Delete this column?"}</DialogTitle>
+        <DialogTitle id="alert-dialog-title">
+          {"Delete this column?"}
+        </DialogTitle>
         <DialogActions>
           <Button onClick={handleClose} color="primary">
             No

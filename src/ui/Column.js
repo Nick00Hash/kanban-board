@@ -1,20 +1,13 @@
-import React, { useState } from 'react'
-import { makeStyles } from '@material-ui/core/styles';
-import { Droppable, Draggable } from 'react-beautiful-dnd'
-import { 
-  Grid, 
-  Typography, 
-  Paper, 
-  Button, 
-  Modal,
-  Fab
-} from "@material-ui/core";
-import AddIcon from '@material-ui/icons/Add';
+import React, { useState } from "react";
+import { makeStyles } from "@material-ui/core/styles";
+import { Droppable, Draggable } from "react-beautiful-dnd";
+import { Grid, Typography, Paper, Button, Modal, Fab } from "@material-ui/core";
+import AddIcon from "@material-ui/icons/Add";
 
 import ModalForm from "./ModalForm";
 import CardTile from "./CardTile";
 import RemoveColumnButton from "./RemoveColumnButton";
-import EditColumnButton from './EditColumnButton'
+import EditColumnButton from "./EditColumnButton";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -42,17 +35,17 @@ const useStyles = makeStyles((theme) => ({
   columnTitle: {
     textAlign: "center",
     margin: "1rem",
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'center',
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center",
   },
   titleText: {
-    overflowWrap: 'break-word',
-    maxWidth: '14rem'
+    overflowWrap: "break-word",
+    maxWidth: "14rem",
   },
   addCardButton: {
-    backgroundColor: '#81d4fa',
-    marginLeft: '.2rem'
+    backgroundColor: "#81d4fa",
+    marginLeft: ".2rem",
   },
 }));
 
@@ -84,7 +77,7 @@ const SimpleModal = (props) => {
   return (
     <div>
       <Fab onClick={handleOpen} className={classes.addCardButton}>
-        <AddIcon/>
+        <AddIcon />
       </Fab>
       <Modal
         open={open}
@@ -93,7 +86,7 @@ const SimpleModal = (props) => {
         aria-describedby="simple-modal-description"
       >
         <div style={modalStyle} className={classes.paper}>
-          <Typography variant='h5'>Add New Card</Typography>
+          <Typography variant="h5">Add New Card</Typography>
           <ModalForm
             id={props.column.columnId}
             addNewCard={props.addNewCard}
@@ -107,7 +100,7 @@ const SimpleModal = (props) => {
 
 const Column = (props) => {
   const classes = useStyles();
-  const { column } = props;
+  const { column, widthMinus } = props;
   const mappedCards = column.cards.map((card, index) => {
     return (
       <Grid className={classes.card} key={card.id}>
@@ -130,11 +123,12 @@ const Column = (props) => {
         <div {...provided.draggableProps} ref={provided.innerRef}>
           <Paper>
             <span className={classes.inline}>
-              <Typography 
-                className={classes.columnTitle} 
-                variant="h4" {...provided.dragHandleProps} 
+              <Typography
+                className={classes.columnTitle}
+                variant="h4"
+                {...provided.dragHandleProps}
                 style={{
-                  backgroundColor: props.column.color
+                  backgroundColor: props.column.color,
                 }}
               >
                 <SimpleModal
@@ -144,7 +138,7 @@ const Column = (props) => {
                   <Button variant="contained" />
                 </SimpleModal>
                 <div>
-                  <Typography variant='h5' className={classes.titleText}>
+                  <Typography variant="h5" className={classes.titleText}>
                     {props.column.title}{" "}
                   </Typography>
                 </div>
@@ -159,22 +153,27 @@ const Column = (props) => {
                     setBoard={props.setBoard}
                     removeId={props.removeId}
                     columnId={props.column.columnId}
+                    widthMinus={widthMinus}
                   />
                 </div>
               </Typography>
             </span>
-            <Droppable droppableId={props.column.columnId} type='card'>
-            {(provided, snapshot) => (
-              <div
-                ref={provided.innerRef}
-                {...provided.droppableProps}
-                className={(snapshot.isDraggingOver ? classes.columnColored : classes.column)}
-              >
-                {mappedCards}
-                {provided.placeholder}
-              </div>
-            )}
-          </Droppable>
+            <Droppable droppableId={props.column.columnId} type="card">
+              {(provided, snapshot) => (
+                <div
+                  ref={provided.innerRef}
+                  {...provided.droppableProps}
+                  className={
+                    snapshot.isDraggingOver
+                      ? classes.columnColored
+                      : classes.column
+                  }
+                >
+                  {mappedCards}
+                  {provided.placeholder}
+                </div>
+              )}
+            </Droppable>
           </Paper>
         </div>
       )}
