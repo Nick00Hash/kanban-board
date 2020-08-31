@@ -1,15 +1,19 @@
 import React from 'react'
 import { BrowserRouter, Route, Switch } from 'react-router-dom'
 
-import App from "./App";
+import App from './App'
+import LandingPage from './LandingPage'
 
 const AppRouter = (props) => {
   return(
-    <BrowserRouter>
-      <Switch>
-        <Route path='/' component={App}/>  
-      </Switch>
-    </BrowserRouter>
+    <div className="App">
+      <BrowserRouter>
+        <Switch>
+          <Route exact path='/kanban' component={App}/>  
+          <Route exact path='/' component={LandingPage}/>
+        </Switch>
+      </BrowserRouter>
+    </div>
   )
 }
 
