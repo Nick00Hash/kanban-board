@@ -50,14 +50,14 @@ const CardAccordion = (props) => {
           id="accordion-details"
         >
           <Typography className={classes.secondaryHeading}>
-            Due: {JSON.stringify(selectedDate).substring(1, 11)}
+            Details
           </Typography>
         </AccordionSummary>
         <AccordionDetails>
           <Grid container>
             <Typography>{description}</Typography>
             <Grid item xs={12}>
-            </Grid>
+            </Grid> 
           </Grid>
         </AccordionDetails>
       </Accordion>
