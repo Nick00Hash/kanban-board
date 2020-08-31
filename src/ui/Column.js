@@ -6,8 +6,10 @@ import {
   Typography, 
   Paper, 
   Button, 
-  Modal, 
+  Modal,
+  Fab
 } from "@material-ui/core";
+import AddIcon from '@material-ui/icons/Add';
 
 import ModalForm from "./ModalForm";
 import CardTile from "./CardTile";
@@ -47,7 +49,11 @@ const useStyles = makeStyles((theme) => ({
   titleText: {
     overflowWrap: 'break-word',
     maxWidth: '14rem'
-  }
+  },
+  addCardButton: {
+    backgroundColor: '#81d4fa',
+    marginLeft: '.2rem'
+  },
 }));
 
 function getModalStyle() {
@@ -77,9 +83,9 @@ const SimpleModal = (props) => {
 
   return (
     <div>
-      <Button variant="contained" onClick={handleOpen} color="primary">
-        +
-      </Button>
+      <Fab onClick={handleOpen} className={classes.addCardButton}>
+        <AddIcon/>
+      </Fab>
       <Modal
         open={open}
         onClose={handleClose}
@@ -124,7 +130,13 @@ const Column = (props) => {
         <div {...provided.draggableProps} ref={provided.innerRef}>
           <Paper>
             <span className={classes.inline}>
-              <Typography className={classes.columnTitle} variant="h4" {...provided.dragHandleProps}>
+              <Typography 
+                className={classes.columnTitle} 
+                variant="h4" {...provided.dragHandleProps} 
+                style={{
+                  backgroundColor: props.column.color
+                }}
+              >
                 <SimpleModal
                   column={props.column}
                   addNewCard={props.addNewCard}

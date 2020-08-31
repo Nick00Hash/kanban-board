@@ -21,54 +21,44 @@ const ContainerOfColumns = (props) => {
   const [board, setBoard] = useState([
     {
       columnId: "1",
+      color: '#A9C1D9',
       title: "To-Do",
       cards: [
         {
           id: "44",
-          title: "Make a trello board",
-          description: "We need to make a Camden, NJ board",
+          title: "Create KanBan Board",
+          description: "Let's create a new board to help organize our team!",
           due_date: Date.now(),
         },
         {
           id: "33",
-          title: "Make a trello board2222",
-          description: "We need to make a Camden, NJ board2222",
+          title: "Take a break",
+          description: "We work too hard. Let's relax for a bit",
           due_date: Date.now(),
         },
       ],
     },
     {
       columnId: "2",
+      color: '#FF9E9D',
       title: "In Progress",
       cards: [
         {
           id: "22",
-          title: "Make a trello board inprogress",
-          description: "We need to make a Camden, NJ board inprogress",
+          title: "Attempt a deploy of our app",
+          description: "God, I hope this works.",
           due_date: Date.now(),
-        },
-        {
-          id: "11",
-          title: "Make a trello board inprogress33333",
-          description: "We need to make a Camden, NJ board inprogress3333",
-          due_date: Date.now(),
-        },
+        }
       ],
     },
     {
       columnId: "3",
+      color: '#7FC7AF',
       title: "Done",
       cards: [
-        // {
-        //   belongsToColumn: "3",
-        //   title: "Make a trello board done",
-        //   description: "We need to make a Camden, NJ board done",
-        //   due_date: Date.now(),
-        // },
       ],
     },
-  ]); // Complex state containing user data of columns/cards/etc
-
+  ]); 
   const addNewCard = (newCard, columnId) => {
     let newBoard = Array.from(board);
     let columnIndex = newBoard.findIndex(
@@ -78,8 +68,8 @@ const ContainerOfColumns = (props) => {
     setBoard(newBoard);
   };
 
-  const dynamicColumnDesktop = 4; // Math.floor(board.length) This will be 12 divided by the number of columns rounded down.
-  const dynamicColumnMobile = 12; // Math.floor(board.length) This will be 12 divided by the number of columns rounded down.
+  const dynamicColumnDesktop = 4; 
+  const dynamicColumnMobile = 12; 
 
   const addNewId = (Id) => {
     setColumnOrder([...columnOrder, Id]);
