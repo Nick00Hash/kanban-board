@@ -58,7 +58,7 @@ const ModalForm = (props) => {
       <TextField
         className={classes.spacing}
         id="description"
-        label="Description"
+        label="Details"
         variant="outlined"
         multiline
         fullWidth
