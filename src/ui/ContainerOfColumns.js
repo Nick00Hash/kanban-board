@@ -9,19 +9,18 @@ import RaisedAppBar from "./AppBar";
 const useStyles = makeStyles({
   columnContainer: {
     paddingTop: "4rem",
-    // marginTop: "80px",
+    // flexWrap: "nowrap",
   },
 });
 
 const ContainerOfColumns = (props) => {
   const classes = useStyles();
   const { globalCount, globalIncrement } = props;
-
   const [columnOrder, setColumnOrder] = useState(["1", "2", "3"]);
   const [board, setBoard] = useState([
     {
       columnId: "1",
-      color: '#A9C1D9',
+      color: "#A9C1D9",
       title: "To-Do",
       cards: [
         {
@@ -40,7 +39,7 @@ const ContainerOfColumns = (props) => {
     },
     {
       columnId: "2",
-      color: '#FF9E9D',
+      color: "#FF9E9D",
       title: "In Progress",
       cards: [
         {
@@ -48,17 +47,28 @@ const ContainerOfColumns = (props) => {
           title: "Attempt a deploy of our app",
           description: "God, I hope this works.",
           due_date: Date.now(),
-        }
+        },
       ],
     },
     {
       columnId: "3",
-      color: '#7FC7AF',
+      color: "#7FC7AF",
       title: "Done",
-      cards: [
-      ],
+      cards: [],
     },
-  ]); 
+  ]);
+  const [dynamicWidth, setDynamicWidth] = useState(85);
+
+  const widthPlus = () => {
+    setDynamicWidth(dynamicWidth + 33);
+    console.log("plus fn fired");
+  };
+
+  const widthMinus = () => {
+    setDynamicWidth(dynamicWidth <= 100 ? dynamicWidth : dynamicWidth - 33);
+    console.log("minus fn fired");
+  };
+
   const addNewCard = (newCard, columnId) => {
     let newBoard = Array.from(board);
     let columnIndex = newBoard.findIndex(
@@ -67,9 +77,6 @@ const ContainerOfColumns = (props) => {
     newBoard[columnIndex].cards.push(newCard);
     setBoard(newBoard);
   };
-
-  const dynamicColumnDesktop = 4; 
-  const dynamicColumnMobile = 12; 
 
   const addNewId = (Id) => {
     setColumnOrder([...columnOrder, Id]);
@@ -80,13 +87,13 @@ const ContainerOfColumns = (props) => {
   };
 
   const editColumnTitle = (columnId, newTitle) => {
-    let newBoard = Array.from(board)
+    let newBoard = Array.from(board);
     let columnIndex = newBoard.findIndex(
       (column) => column.columnId === columnId
     );
-    newBoard[columnIndex].title = newTitle
-    setBoard(newBoard)
-  }
+    newBoard[columnIndex].title = newTitle;
+    setBoard(newBoard);
+  };
 
   const removeCard = (id, columnId) => {
     let newBoard = Array.from(board);
@@ -150,7 +157,7 @@ const ContainerOfColumns = (props) => {
     const draggedCard = sourceColumn.cards.find(
       (card) => card.id === result.draggableId
     );
-    
+
     if (sourceColumn === destinationColumn) {
       const cards = Array.from(sourceColumn.cards);
       cards.splice(result.source.index, 1);
@@ -214,9 +221,9 @@ const ContainerOfColumns = (props) => {
     return (
       <Grid
         item
+        xs={12}
+        md={Math.floor(12 / board.length)}
         key={column.columnId}
-        xs={dynamicColumnMobile}
-        md={dynamicColumnDesktop}
       >
         <Column
           column={column}
@@ -230,19 +237,22 @@ const ContainerOfColumns = (props) => {
           moveCard={moveCard}
           lastColumn={lastColumn}
           editColumnTitle={editColumnTitle}
+          widthMinus={widthMinus}
         />
       </Grid>
     );
   });
 
   return (
-    <>
+    <div style={{ width: `${dynamicWidth}vw` }}>
       <RaisedAppBar
         board={board}
         setBoard={setBoard}
         addNewId={addNewId}
         globalCount={globalCount}
         globalIncrement={globalIncrement}
+        widthPlus={widthPlus}
+        numOfColumns={columnOrder.length}
       />
       <DragDropContext onDragEnd={onDragEnd}>
         <Droppable
@@ -254,6 +264,7 @@ const ContainerOfColumns = (props) => {
           {(provided) => (
             <Grid
               container
+              maxWidth="false"
               spacing={5}
               justify="space-around"
               className={classes.columnContainer}
@@ -266,7 +277,7 @@ const ContainerOfColumns = (props) => {
           )}
         </Droppable>
       </DragDropContext>
-    </>
+    </div>
   );
 };
 

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
@@ -30,14 +30,22 @@ const ElevationScroll = (props) => {
 };
 
 const RaisedAppBar = (props) => {
-  const { board, setBoard, addNewId, globalCount, globalIncrement } = props;
+  const {
+    board,
+    setBoard,
+    addNewId,
+    globalCount,
+    globalIncrement,
+    widthPlus,
+    numOfColumns
+  } = props;
 
   const classes = useStyles();
   return (
     <React.Fragment>
       <CssBaseline />
       <ElevationScroll {...props}>
-        <AppBar color='secondary'>
+        <AppBar color="secondary">
           <Toolbar>
             <Typography className={classes.title} variant="h6">
               Welcome to your Kanban Board!
@@ -48,6 +56,8 @@ const RaisedAppBar = (props) => {
               addNewId={addNewId}
               globalCount={globalCount}
               globalIncrement={globalIncrement}
+              widthPlus={widthPlus}
+              numOfColumns={numOfColumns}
             />
           </Toolbar>
         </AppBar>
