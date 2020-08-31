@@ -89,6 +89,15 @@ const ContainerOfColumns = (props) => {
     setColumnOrder(columnOrder.filter((columnId) => columnId !== Id));
   };
 
+  const editColumnTitle = (columnId, newTitle) => {
+    let newBoard = Array.from(board)
+    let columnIndex = newBoard.findIndex(
+      (column) => column.columnId === columnId
+    );
+    newBoard[columnIndex].title = newTitle
+    setBoard(newBoard)
+  }
+
   const removeCard = (id, columnId) => {
     let newBoard = Array.from(board);
     let columnIndex = newBoard.findIndex(
@@ -230,6 +239,7 @@ const ContainerOfColumns = (props) => {
           removeCard={removeCard}
           moveCard={moveCard}
           lastColumn={lastColumn}
+          editColumnTitle={editColumnTitle}
         />
       </Grid>
     );
