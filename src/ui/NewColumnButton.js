@@ -12,7 +12,7 @@ const NewColumnButton = (props) => {
       ...board,
       {
         columnId: idString,
-        title: "Click to change Title",
+        title: "Click Edit to Change Title",
         cards: [],
       },
     ]);
