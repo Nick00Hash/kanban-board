@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { 
-  Fab, 
   Dialog,
   DialogActions,
   DialogTitle,
-  Button
+  Button,
+  IconButton
 } from "@material-ui/core";
 import DeleteForeverIcon from "@material-ui/icons/DeleteForever";
 import { makeStyles } from "@material-ui/core/styles";
@@ -38,14 +38,12 @@ const RemoveColumnButton = (props) => {
 
   return (
     <div>
-      <Fab
-        size="small"
+      <IconButton
         aria-label="add"
-        className={classes.remove}
         onClick={handleOpen}
       >
         <DeleteForeverIcon />
-      </Fab>
+      </IconButton>
       <Dialog
         open={open}
         onClose={handleClose}
