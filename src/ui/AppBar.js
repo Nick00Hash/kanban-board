@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
@@ -37,6 +37,7 @@ const RaisedAppBar = (props) => {
     globalCount,
     globalIncrement,
     widthPlus,
+    numOfColumns
   } = props;
 
   const classes = useStyles();
@@ -56,6 +57,7 @@ const RaisedAppBar = (props) => {
               globalCount={globalCount}
               globalIncrement={globalIncrement}
               widthPlus={widthPlus}
+              numOfColumns={numOfColumns}
             />
           </Toolbar>
         </AppBar>

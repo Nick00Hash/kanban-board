@@ -47,6 +47,9 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: "#81d4fa",
     marginLeft: ".2rem",
   },
+  columnDiv: {
+    width: '23rem'
+  }
 }));
 
 function getModalStyle() {
@@ -120,7 +123,7 @@ const Column = (props) => {
   return (
     <Draggable draggableId={props.column.columnId} index={props.index}>
       {(provided) => (
-        <div {...provided.draggableProps} ref={provided.innerRef}>
+        <div {...provided.draggableProps} ref={provided.innerRef} className={classes.columnDiv}>
           <Paper>
             <span className={classes.inline}>
               <Typography

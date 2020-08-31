@@ -252,6 +252,7 @@ const ContainerOfColumns = (props) => {
         globalCount={globalCount}
         globalIncrement={globalIncrement}
         widthPlus={widthPlus}
+        numOfColumns={columnOrder.length}
       />
       <DragDropContext onDragEnd={onDragEnd}>
         <Droppable

@@ -2,6 +2,7 @@ import React from "react";
 import Button from "@material-ui/core/Button";
 
 import AddBoxIcon from "@material-ui/icons/AddBox";
+import { updateReturn } from "typescript";
 
 const NewColumnButton = (props) => {
   const {
@@ -11,6 +12,7 @@ const NewColumnButton = (props) => {
     globalIncrement,
     addNewId,
     widthPlus,
+    numOfColumns
   } = props;
 
   const colors = [
@@ -46,6 +48,10 @@ const NewColumnButton = (props) => {
   ];
 
   const addNewColumn = (props) => {
+    if (numOfColumns > 11) {
+      return;
+    }
+
     let idString = globalCount.toString();
     addNewId(idString);
     setBoard([
